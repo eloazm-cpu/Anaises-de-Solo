@@ -215,12 +215,12 @@
                 <div className="bg-eco-green text-white p-6 rounded-2xl shadow-lg relative overflow-hidden">
                     <div className="relative z-10">
                         <h2 className="text-2xl font-bold mb-2">Coleta na Rizosfera</h2>
-                        <p className="text-sm opacity-90 mb-4">
-                            Guia completo para coleta de solo na linha de plantio e avaliação da microbiota em contato direto com as plantas.
+                        <p className="text-sm opacity-90 mb-4 text-justify">
+                            Este guia traz as informações necessárias para realizar a coleta de solo na linha de plantio e avaliar a microbiota que está em contato direto com as plantas.
                         </p>
                         <div className="bg-white/20 p-3 rounded-lg backdrop-blur-sm border border-white/30 text-sm">
                             <i className="ph ph-target mr-2"></i>
-                            O mais indicado para avaliar efeito de <strong>bioinsumos</strong> e interações na rizosfera.
+                            É o mais indicado para avaliar o efeito de <strong>bioinsumos</strong> e interações dos microrganismos com a planta na rizosfera.
                         </div>
                     </div>
                     <i className="ph ph-plant absolute -right-4 -bottom-4 text-8xl opacity-10"></i>
@@ -230,20 +230,63 @@
                     <h3 className="font-bold text-eco-dark text-lg mb-4 border-b pb-2 flex items-center">
                         <i className="ph ph-map-pin-line mr-2 text-eco-green"></i> Estratégia de Coleta
                     </h3>
-                    <p className="text-slate-600 text-sm mb-4">
-                        Para compor a amostra, as coletas serão realizadas em uma área de interesse da empresa, sempre coletando em <strong>2 pontos comparativos</strong>:
+                    <p className="text-slate-600 text-sm mb-4 text-justify">
+                        Para compor a amostra serão realizadas coletas numa área de interesse da empresa, sempre recolhendo <strong>2 pontos</strong>:
                     </p>
-                    <div className="grid grid-cols-2 gap-3 mb-4">
-                        <div className="bg-green-50 border border-green-200 p-3 rounded-lg text-center">
+                    <div className="grid grid-cols-2 gap-3 mb-6">
+                        <div className="bg-green-50 border border-green-200 p-3 rounded-lg text-center flex flex-col justify-center shadow-sm">
                             <div className="font-bold text-green-700 text-lg mb-1">1 Ponto</div>
-                            <div className="text-xs text-green-600 font-medium">Área Tratada (Produtos Ecobhio)</div>
+                            <div className="text-[11px] text-green-700 font-medium leading-tight">Área Tratada<br/>(Produtos Ecobhio)</div>
                         </div>
-                        <div className="bg-slate-100 border border-slate-200 p-3 rounded-lg text-center">
+                        <div className="bg-slate-100 border border-slate-200 p-3 rounded-lg text-center flex flex-col justify-center shadow-sm">
                             <div className="font-bold text-slate-700 text-lg mb-1">1 Ponto</div>
-                            <div className="text-xs text-slate-600 font-medium">Testemunha (Padrão Fazenda)</div>
+                            <div className="text-[11px] text-slate-600 font-medium leading-tight">Área Testemunha<br/>(Padrão Fazenda)</div>
+                        </div>
+                    </div>
+
+                    {/* Novo Visual: Mapa de Produtividade / NDVI */}
+                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 shadow-inner">
+                        <div className="mb-3 flex items-center justify-between">
+                            <span className="font-bold text-xs text-slate-700 uppercase tracking-wide">Produtividade</span>
+                            <div className="w-1/2 relative pt-2">
+                                {/* Seta da Escala */}
+                                <div className="absolute top-0 left-0 w-full flex items-center">
+                                    <div className="h-[2px] bg-slate-800 w-full"></div>
+                                    <div className="w-0 h-0 border-y-[4px] border-y-transparent border-l-[6px] border-l-slate-800 -ml-1"></div>
+                                </div>
+                                {/* Barra de Cores */}
+                                <div className="flex h-3 w-full rounded-sm overflow-hidden border border-slate-300 shadow-sm mt-1">
+                                    <div className="flex-1 bg-[#ff0000]"></div>
+                                    <div className="flex-1 bg-[#ffff00]"></div>
+                                    <div className="flex-1 bg-[#ccff33]"></div>
+                                    <div className="flex-1 bg-[#33cc33]"></div>
+                                    <div className="flex-1 bg-[#006600]"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {/* Simulação de Mapa NDVI por CSS */}
+                        <div className="w-full h-40 rounded-lg border-2 border-slate-300 overflow-hidden relative shadow-sm" style={{
+                            background: 'radial-gradient(ellipse at 15% 15%, #ff0000 0%, #ff6600 25%, transparent 50%), radial-gradient(ellipse at 85% 85%, #ff0000 0%, #ffff00 35%, transparent 60%), linear-gradient(135deg, #ccff33 0%, #33cc33 50%, #006600 100%)'
+                        }}>
+                            {/* Textura de ruído / satélite */}
+                            <div className="absolute inset-0 opacity-10 mix-blend-overlay" style={{ backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, #000 2px, #000 4px)' }}></div>
+                            <div className="absolute inset-0 opacity-10 mix-blend-overlay" style={{ backgroundImage: 'repeating-linear-gradient(90deg, transparent, transparent 2px, #000 2px, #000 4px)' }}></div>
+                            {/* Foco de Produtividade Central */}
+                            <div className="absolute top-1/4 left-1/3 w-1/2 h-1/2 bg-[#33cc33] blur-xl opacity-60 rounded-full"></div>
                         </div>
                     </div>
                 </Card>
+
+                {/* NOVO BLOCO COM O TEXTO EXATO DA IMAGEM SOBRE FREEZER E GELOX */}
+                <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg shadow-sm mb-6">
+                    <h4 className="font-bold text-blue-900 text-sm mb-2 flex items-center">
+                        <i className="ph ph-snowflake text-lg mr-2"></i> Armazenamento e Envio
+                    </h4>
+                    <p className="text-xs text-blue-800 text-justify leading-relaxed">
+                        Assim que a amostra for coletada e embalada, ela deve ser acondicionada em <strong>freezer</strong> até o envio e deve ser postada o mais rápido possível para garantir a qualidade do resultado. Nossa indicação é que a amostra não demore mais de <strong>07 dias corridos</strong> para chegar no laboratório, após ter sido coletada. O envio deve ter as mesmas condições da armazenagem, ou seja, se tiver em freezer enviar com <strong>gelox</strong>.
+                    </p>
+                </div>
 
                 <Card>
                     <h3 className="font-bold text-eco-dark text-lg mb-4 border-b pb-2">Como acontecem as análises</h3>
@@ -475,21 +518,52 @@
                                 <p className="text-xs text-yellow-800">O ponto deve ser marcado com a bandeirinha e <strong>georreferenciado</strong>, para a sinalização do ponto nas próximas coletas.</p>
                             </div>
 
-                            <div className="bg-white border rounded-lg p-4 mt-4">
-                                <div className="text-center mb-2 text-xs font-bold text-slate-500">Esquema da Rizosfera</div>
-                                <div className="relative h-24 border-b-8 border-[#6c4e31] flex justify-around items-end pb-2">
-                                    <div className="flex flex-col items-center">
-                                        <i className="ph ph-plant text-green-500 text-3xl"></i>
-                                        <div className="w-0 h-0 border-l-[6px] border-l-transparent border-t-[8px] border-t-yellow-400 border-r-[6px] border-r-transparent absolute bottom-[-8px]"></div>
-                                    </div>
-                                    <div className="flex flex-col items-center">
-                                        <i className="ph ph-plant text-green-500 text-3xl"></i>
-                                        <div className="w-0 h-0 border-l-[6px] border-l-transparent border-t-[8px] border-t-yellow-400 border-r-[6px] border-r-transparent absolute bottom-[-8px]"></div>
+                            <div className="bg-white border border-slate-200 rounded-lg p-4 mt-4 space-y-6">
+                                {/* Culturas Anuais */}
+                                <div>
+                                    <div className="text-xs font-bold text-slate-700 mb-2">Culturas anuais</div>
+                                    <div className="relative h-16 border-b-[12px] border-[#6c4e31] flex justify-around items-end pb-0">
+                                        {[1,2,3].map(i => (
+                                            <div key={`anual-${i}`} className="flex flex-col items-center relative">
+                                                <i className="ph-fill ph-plant text-green-500 text-3xl"></i>
+                                                {/* Raiz simulada */}
+                                                <div className="absolute -bottom-3 w-4 h-5 border-x border-b border-[#4a3521] opacity-30 rounded-b-full border-dashed"></div>
+                                                <div className="w-0 h-0 border-l-[5px] border-l-transparent border-t-[8px] border-t-yellow-400 border-r-[5px] border-r-transparent absolute -bottom-[12px] z-10"></div>
+                                            </div>
+                                        ))}
+                                        <div className="absolute -bottom-[24px] left-0 right-0 flex items-center text-[10px] font-bold text-eco-dark">
+                                            <span className="flex-grow border-t-2 border-eco-dark mr-1"></span>
+                                            <i className="ph-fill ph-caret-right text-eco-dark"></i>
+                                            <span className="ml-1 whitespace-nowrap">Linha de plantio</span>
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="flex items-center justify-center mt-3 text-xs bg-[#6c4e31] text-white p-2 rounded">
-                                    <div className="w-0 h-0 border-l-[4px] border-l-transparent border-t-[6px] border-t-yellow-400 border-r-[4px] border-r-transparent mr-2"></div>
-                                    Triângulo amarelo = Local onde coletar amostra (raízes)
+
+                                {/* Culturas Perenes */}
+                                <div className="pt-4 border-t border-slate-100">
+                                    <div className="text-xs font-bold text-slate-700 mb-2">Culturas Perenes</div>
+                                    <div className="relative h-20 border-b-[12px] border-[#6c4e31] flex justify-around items-end pb-0">
+                                        {[1,2,3].map(i => (
+                                            <div key={`perene-${i}`} className="flex flex-col items-center relative">
+                                                <i className="ph-fill ph-tree text-green-600 text-[40px] z-10"></i>
+                                                {/* Tronco */}
+                                                <div className="w-2 h-3 bg-[#5c4033] mt-[-8px] z-0"></div>
+                                                {/* Raiz simulada */}
+                                                <div className="absolute -bottom-3 w-6 h-6 border-x border-b border-[#4a3521] opacity-30 rounded-b-full border-dashed"></div>
+                                                <div className="w-0 h-0 border-l-[5px] border-l-transparent border-t-[8px] border-t-yellow-400 border-r-[5px] border-r-transparent absolute -bottom-[12px] z-20"></div>
+                                            </div>
+                                        ))}
+                                        <div className="absolute -bottom-[24px] left-0 right-0 flex items-center text-[10px] font-bold text-eco-dark">
+                                            <span className="flex-grow border-t-2 border-eco-dark mr-1"></span>
+                                            <i className="ph-fill ph-caret-right text-eco-dark"></i>
+                                            <span className="ml-1 whitespace-nowrap">Linha de plantio</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="flex items-center justify-center mt-8 text-xs bg-[#6c4e31] text-white p-2 rounded shadow-sm">
+                                    <div className="w-0 h-0 border-l-[5px] border-l-transparent border-t-[8px] border-t-yellow-400 border-r-[5px] border-r-transparent mr-2"></div>
+                                    Triângulo amarelo = Local onde coletar amostra simples
                                 </div>
                             </div>
                         </div>
@@ -645,7 +719,7 @@
         const TimelineScreen = () => (
             <div className="space-y-6">
                 <h2 className="text-xl font-bold text-eco-dark flex items-center">
-                    <i className="ph ph-calendar-check mr-2 text-eco-green text-2xl"></i> Cronograma e Envio
+                    <i className="ph ph-calendar-check mr-2 text-eco-green text-2xl"></i> Cronograma e Avaliações
                 </h2>
 
                 <Card>
@@ -689,6 +763,71 @@
                     </p>
                 </Card>
 
+                {/* NOVO BLOCO: ACOMPANHAMENTO E AVALIAÇÕES */}
+                <Card className="!bg-eco-light border-eco-green/40 border-2">
+                    <h3 className="font-bold text-eco-dark text-lg mb-4 border-b border-eco-green/20 pb-2 flex items-center leading-tight">
+                        <i className="ph ph-chart-line-up mr-2 text-eco-green text-2xl"></i> 
+                        Acompanhamento do Protocolo Ecobhio
+                    </h3>
+                    
+                    <div className="grid grid-cols-1 gap-4">
+                        {/* Patógenos e Nematóides */}
+                        <div className="grid grid-cols-2 gap-3">
+                            <div className="bg-white p-3 rounded-lg border border-slate-200 shadow-sm flex flex-col">
+                                <div className="flex items-center mb-2">
+                                    <i className="ph-fill ph-virus text-red-500 mr-2 text-xl"></i>
+                                    <h4 className="font-bold text-xs text-slate-800 uppercase tracking-tight">Patógenos</h4>
+                                </div>
+                                <p className="text-[10px] text-slate-600 leading-tight">Mapeamento e definição de quais patógenos de interesse avaliar nas análises genéticas.</p>
+                            </div>
+                            <div className="bg-white p-3 rounded-lg border border-slate-200 shadow-sm flex flex-col">
+                                <div className="flex items-center mb-2">
+                                    <i className="ph-fill ph-bug text-orange-500 mr-2 text-xl"></i>
+                                    <h4 className="font-bold text-xs text-slate-800 uppercase tracking-tight">Nematóides</h4>
+                                </div>
+                                <p className="text-[10px] text-slate-600 leading-tight">Análises de nematóides convencionais no início e final do ciclo de amostragem.</p>
+                            </div>
+                        </div>
+
+                        {/* Microrganismos e NDVI */}
+                        <div className="grid grid-cols-2 gap-3">
+                            <div className="bg-white p-3 rounded-lg border border-slate-200 shadow-sm flex flex-col">
+                                <div className="flex items-center mb-2">
+                                    <i className="ph-fill ph-leaf text-green-500 mr-2 text-xl"></i>
+                                    <h4 className="font-bold text-xs text-slate-800 uppercase tracking-tight leading-tight">Microrganismos Amigos</h4>
+                                </div>
+                                <p className="text-[10px] text-slate-600 leading-tight">Apontamento dos microrganismos benéficos comuns para rastreabilidade e dinâmica.</p>
+                            </div>
+                            <div className="bg-white p-3 rounded-lg border border-slate-200 shadow-sm flex flex-col">
+                                <div className="flex items-center mb-2">
+                                    <i className="ph-fill ph-satellite text-blue-500 mr-2 text-xl"></i>
+                                    <h4 className="font-bold text-xs text-slate-800 uppercase tracking-tight">NDVI</h4>
+                                </div>
+                                <p className="text-[10px] text-slate-600 leading-tight">Imagens de satélite NDVI durante todo o acompanhamento para visualização da Biomassa.</p>
+                            </div>
+                        </div>
+
+                        {/* Resultados Esperados */}
+                        <div className="bg-white p-4 rounded-lg border border-slate-200 shadow-sm relative overflow-hidden mt-2">
+                            <div className="absolute top-0 left-0 w-1 h-full bg-eco-green"></div>
+                            <h4 className="font-bold text-sm text-eco-dark mb-2 flex items-center">
+                                <i className="ph-fill ph-list-magnifying-glass text-eco-green mr-2 text-xl"></i> 
+                                Resultados Esperados
+                            </h4>
+                            <p className="text-xs text-slate-600 mb-3 text-justify leading-relaxed">
+                                Acompanhamento de todo o ciclo da cultura, avaliando a <strong>microbiota existente e suas interações</strong>. Comparação ponto a ponto e média de produção da área tratada vs área não tratada. <em>Se possível, avaliar qualidade da bebida (café).</em>
+                            </p>
+                            <div className="bg-slate-50 border border-slate-200 p-3 rounded text-xs text-slate-700 text-justify flex items-start">
+                                <i className="ph-fill ph-file-pdf text-red-500 text-2xl mr-2 mt-0.5"></i>
+                                <div>
+                                    <strong className="text-eco-dark block mb-0.5">Relatório Final Agronômico</strong>
+                                    Ao final do ciclo da cultura, será entregue e apresentado um relatório final completo.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Card>
+
                 <Card className="!bg-blue-50 border-blue-200">
                     <h3 className="font-bold text-blue-900 text-sm mb-3 flex items-center">
                         <i className="ph ph-thermometer-snowflake text-blue-600 text-lg mr-2"></i> Armazenamento e Postagem
@@ -711,16 +850,146 @@
             </div>
         );
 
+        // 6. METODOLOGIA E ANÁLISES (NOVO)
+        const MethodologyScreen = () => (
+            <div className="space-y-6 animate-fade-in">
+                <h2 className="text-xl font-bold text-eco-dark flex items-center">
+                    <i className="ph ph-microscope mr-2 text-eco-green text-2xl"></i> Metodologia GOLSOLOS
+                </h2>
+
+                {/* qPCR Workflow */}
+                <Card className="border-t-4 border-t-eco-green">
+                    <h3 className="font-bold text-slate-800 text-sm mb-4 uppercase flex items-center">
+                        qPCR <span className="text-xs text-slate-500 ml-2 normal-case">(Como funciona?)</span>
+                    </h3>
+
+                    <div className="relative border-l-2 border-slate-200 ml-4 space-y-6 pb-4 mt-2">
+                        {/* Step 1 */}
+                        <div className="relative">
+                            <div className="absolute -left-[17px] top-1 w-8 h-8 bg-blue-100 rounded-full border-2 border-white flex items-center justify-center text-blue-600 shadow-sm">
+                                <i className="ph-fill ph-dna text-lg"></i>
+                            </div>
+                            <div className="ml-10 bg-slate-50 border border-slate-100 p-3 rounded-lg shadow-sm">
+                                <span className="text-xs font-bold text-slate-400 block mb-1">Passo 1</span>
+                                <h4 className="text-sm font-bold text-slate-700">DNA de amostra de solo</h4>
+                            </div>
+                        </div>
+                        {/* Step 2 */}
+                        <div className="relative">
+                            <div className="absolute -left-[17px] top-1 w-8 h-8 bg-green-100 rounded-full border-2 border-white flex items-center justify-center text-green-600 shadow-sm">
+                                <i className="ph-fill ph-test-tube text-lg"></i>
+                            </div>
+                            <div className="ml-10 bg-slate-50 border border-slate-100 p-3 rounded-lg shadow-sm">
+                                <span className="text-xs font-bold text-slate-400 block mb-1">Passo 2</span>
+                                <h4 className="text-sm font-bold text-slate-700"><em>Primers</em> + Fluoróforo + qPCR</h4>
+                            </div>
+                        </div>
+                        {/* Step 3 */}
+                        <div className="relative">
+                            <div className="absolute -left-[17px] top-1 w-8 h-8 bg-purple-100 rounded-full border-2 border-white flex items-center justify-center text-purple-600 shadow-sm">
+                                <i className="ph-fill ph-monitor-waveform text-lg"></i>
+                            </div>
+                            <div className="ml-10 bg-slate-50 border border-slate-100 p-3 rounded-lg shadow-sm">
+                                <span className="text-xs font-bold text-slate-400 block mb-1">Passo 3</span>
+                                <h4 className="text-sm font-bold text-slate-700">Detecção Fluorescente</h4>
+                            </div>
+                        </div>
+                        {/* Step 4 */}
+                        <div className="relative">
+                            <div className="absolute -left-[17px] top-1 w-8 h-8 bg-orange-100 rounded-full border-2 border-white flex items-center justify-center text-orange-600 shadow-sm">
+                                <i className="ph-fill ph-chart-line-up text-lg"></i>
+                            </div>
+                            <div className="ml-10 bg-orange-50 border border-orange-200 p-3 rounded-lg shadow-sm relative">
+                                <span className="text-xs font-bold text-orange-500 block mb-1">Passo 4</span>
+                                <h4 className="text-sm font-bold text-slate-800">Curva-padrão e Quantificação</h4>
+                                
+                                {/* Annotations da Imagem */}
+                                <div className="mt-3 flex flex-col gap-2">
+                                    <div className="bg-white px-2 py-1.5 rounded border border-orange-100 flex items-start shadow-sm">
+                                        <i className="ph-fill ph-cell-signal-full text-orange-500 mr-1.5 mt-0.5 shrink-0"></i>
+                                        <span className="text-[10px] text-slate-600 font-medium leading-tight">Quantidade de células do microrganismo por grama de solo</span>
+                                    </div>
+                                    <div className="bg-white px-2 py-1.5 rounded border border-orange-100 flex items-start shadow-sm">
+                                        <i className="ph-fill ph-clock text-orange-500 mr-1.5 mt-0.5 shrink-0"></i>
+                                        <span className="text-[10px] text-slate-600 font-medium leading-tight">Resultado entregue em <strong>até 60 dias</strong></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Card>
+
+                {/* List of Microorganisms */}
+                <Card className="border-t-4 border-t-[#004d40]">
+                    <div className="flex items-center justify-between mb-4 border-b pb-3">
+                        <h3 className="font-bold text-slate-800 text-sm leading-tight pr-2">
+                            Lista de Microrganismos (GOLSOLOS)
+                        </h3>
+                        {/* Simulação Logo GS */}
+                        <div className="w-10 h-10 rounded-full bg-[#004d40] flex items-center justify-center text-white font-bold border-2 border-[#d35400] shrink-0 shadow-md">
+                            <span className="text-white text-base">G</span><span className="text-[#d35400] text-base italic">S</span>
+                        </div>
+                    </div>
+                    
+                    <p className="text-xs text-slate-500 mb-3 text-justify">Alguns dos principais microrganismos (vírus, fungos, bactérias e nematóides) que a análise consegue identificar:</p>
+
+                    {/* Caixa com Scroll interno para a lista longa */}
+                    <div className="bg-slate-50 border border-slate-200 rounded-lg p-3 h-48 overflow-y-auto hide-scrollbar text-[10px] text-slate-600 columns-1 sm:columns-2 gap-4 font-mono shadow-inner relative">
+                        <ul className="list-disc pl-3 space-y-1">
+                            <li>Allexivirus</li>
+                            <li>American Hop Latent Virus</li>
+                            <li>Apple mosaic virus</li>
+                            <li>Azospirillum brasilense</li>
+                            <li>Bacillus amyloliquefaciens</li>
+                            <li>Bacillus aryabhattai</li>
+                            <li>Bacillus cereus</li>
+                            <li>Bacillus licheniformis</li>
+                            <li>Bacillus pumilus</li>
+                            <li>Bacillus subtilis</li>
+                            <li>Bacillus thuringiensis</li>
+                            <li>Beauveria bassiana</li>
+                            <li>Bradyrhizobium spp.</li>
+                            <li>Bactérias totais</li>
+                            <li>Coliformes termotolerantes</li>
+                            <li>Colletotrichum spp.</li>
+                            <li>Escherichia coli</li>
+                            <li>Fusarium oxysporum</li>
+                            <li>Fusarium solani</li>
+                            <li>Fungos totais</li>
+                            <li>Heterodera glycines</li>
+                            <li>Macrophomina phaseolina</li>
+                            <li>Meloidogyne javanica</li>
+                            <li>Metarhizium anisopliae</li>
+                            <li>Paecilomyces lilacinus</li>
+                            <li>Pochonia chlamydosporia</li>
+                            <li>Pseudomonas fluorescens</li>
+                            <li>Rhizoctonia solani</li>
+                            <li>Saccharomyces cerevisiae</li>
+                            <li>Salmonella spp.</li>
+                            <li>Trichoderma spp.</li>
+                            <li>Verticillium dahliae</li>
+                        </ul>
+                    </div>
+                    <div className="text-center mt-2">
+                        <span className="text-[9px] text-slate-400 uppercase tracking-widest flex justify-center items-center">
+                            <i className="ph ph-arrows-out-line-vertical mr-1"></i> Deslize para ver a lista
+                        </span>
+                    </div>
+                </Card>
+            </div>
+        );
+
         // --- COMPONENTE PRINCIPAL (APP) ---
         const App = () => {
             const [currentTab, setCurrentTab] = useState('intro');
 
             const tabs = [
                 { id: 'intro', icon: 'ph-info', label: 'Início' },
-                { id: 'mat', icon: 'ph-toolbox', label: 'Materiais' },
+                { id: 'mat', icon: 'ph-toolbox', label: 'Kit' }, // Rótulo encurtado para caber no telemóvel
                 { id: 'alert', icon: 'ph-shield-warning', label: 'Cuidados' },
                 { id: 'step', icon: 'ph-list-numbers', label: 'Coleta' },
-                { id: 'time', icon: 'ph-calendar-check', label: 'Prazos' }
+                { id: 'time', icon: 'ph-calendar-check', label: 'Prazos' },
+                { id: 'method', icon: 'ph-microscope', label: 'Análise' } // Nova aba
             ];
 
             return (
@@ -749,11 +1018,12 @@
                         {currentTab === 'alert' && <WarningsScreen />}
                         {currentTab === 'step' && <StepByStepScreen />}
                         {currentTab === 'time' && <TimelineScreen />}
+                        {currentTab === 'method' && <MethodologyScreen />}
                     </main>
 
                     {/* Bottom Navigation Bar */}
-                    <nav className="bg-white border-t border-slate-200 fixed bottom-0 w-full md:max-w-md pb-safe z-50">
-                        <div className="flex justify-around items-center h-16">
+                    <nav className="bg-white border-t border-slate-200 fixed bottom-0 w-full md:max-w-md pb-safe z-50 overflow-x-auto hide-scrollbar">
+                        <div className="flex justify-between items-center h-16 px-1">
                             {tabs.map(tab => (
                                 <button 
                                     key={tab.id}
