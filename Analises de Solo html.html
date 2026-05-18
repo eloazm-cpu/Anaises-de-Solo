@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia de Coleta de Solo - Ecobhio</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        eco: {
+                            green: '#74A629', // Verde logotipo Ecobhio
+                            dark: '#0B2046',  // Azul escuro logotipo
+                            light: '#F4F7F2',
+                            yellow: '#F2C200'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f3f4f6; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Custom Checkbox */
+        .checkbox-round {
+            width: 1.5em;
+            height: 1.5em;
+            background-color: white;
+            border-radius: 50%;
+            vertical-align: middle;
+            border: 2px solid #cbd5e1;
+            appearance: none;
+            -webkit-appearance: none;
+            outline: none;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease-in-out;
+        }
+        .checkbox-round:checked {
+            background-color: #74A629;
+            border-color: #74A629;
+        }
+        .checkbox-round:checked::after {
+            content: '\2714';
+            font-size: 14px;
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Zig Zag Line for CSS */
+        .zig-zag-path {
+            border-left: 3px dashed #74A629;
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+
+        /* Animações Customizadas */
+        @keyframes crushDown {
+            0%, 100% { transform: translateY(-20px); }
+            40%, 60% { transform: translateY(10px); }
+        }
+        @keyframes clodBreak {
+            0%, 30% { transform: scale(1); opacity: 1; }
+            40%, 60% { transform: scale(1.2); opacity: 0; }
+            70%, 100% { transform: scale(0); opacity: 0; }
+        }
+        @keyframes particlesShow {
+            0%, 30% { opacity: 0; transform: scale(0); }
+            40%, 100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes tiltSpade {
+            0%, 100% { transform: rotate(0deg); }
+            30%, 70% { transform: rotate(-35deg) translate(-10px, 10px); }
+        }
+        @keyframes dirtDrop {
+            0%, 30% { opacity: 0; transform: translateY(-10px); }
+            40%, 60% { opacity: 1; transform: translateY(30px); }
+            70%, 100% { opacity: 0; transform: translateY(40px); }
+        }
+        @keyframes fillUp {
+            0%, 30% { height: 10%; }
+            70%, 100% { height: 80%; }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // --- COMPONENTES REUTILIZÁVEIS ---
+        const Card = ({ children, className = "" }) => (
+            <div className={`bg-white rounded-xl shadow-sm border border-slate-100 p-5 ${className}`}>
+                {children}
+            </div>
+        );
+
+        const IconBox = ({ icon, label, qty, obs, iconColor="text-eco-dark" }) => (
+            <div className="flex flex-col items-center p-4 bg-slate-50 rounded-lg border border-slate-200 text-center hover:shadow-md transition-shadow">
+                <div className={`w-16 h-16 rounded-full bg-eco-dark flex items-center justify-center mb-3 shadow-inner`}>
+                    <i className={`ph ${icon} text-3xl text-white`}></i>
+                </div>
+                <h4 className="font-bold text-slate-800 leading-tight">{label}</h4>
+                {qty && <span className="text-sm font-semibold text-eco-green mt-1">Qtd. {qty}</span>}
+                {obs && <p className="text-xs text-slate-500 mt-1 leading-tight">{obs}</p>}
+            </div>
+        );
+
+        // --- COMPONENTE DE VÍDEO/GIF ---
+        const MediaViewer = ({ type, src, placeholderText }) => (
+            <div className="relative rounded-xl overflow-hidden shadow-sm border-2 border-dashed border-slate-300 mt-4 bg-slate-200 w-full max-w-[280px] mx-auto aspect-video flex flex-col items-center justify-center group cursor-pointer">
+                {src ? (
+                    type === 'video' ? (
+                        <video src={src} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
+                    ) : (
+                        <img src={src} alt="Demonstração" className="absolute inset-0 w-full h-full object-cover" />
+                    )
+                ) : (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-100">
+                        <i className="ph ph-video-camera text-4xl text-slate-300 mb-2"></i>
+                    </div>
+                )}
+                
+                <div className={`absolute inset-0 bg-slate-900/30 flex flex-col items-center justify-center ${src ? 'opacity-0 hover:opacity-100' : 'opacity-100'} transition-opacity duration-300`}>
+                     <i className="ph-fill ph-play-circle text-4xl text-white opacity-90 drop-shadow-md"></i>
+                     <span className="text-white text-[10px] font-bold mt-2 bg-black/60 px-3 py-1 rounded-full">
+                        {placeholderText || "Inserir link do seu GIF/Vídeo"}
+                     </span>
+                </div>
+            </div>
+        );
+
+        // --- ANIMAÇÕES ILUSTRATIVAS (CSS) ---
+        const AnimHomogeneizacao = () => (
+            <div className="relative rounded-xl overflow-hidden shadow-sm border border-slate-200 mt-4 bg-white w-full max-w-[280px] mx-auto h-40 flex items-center justify-center">
+                <span className="absolute top-2 left-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Ilustração</span>
+                
+                {/* Saco Plástico */}
+                <div className="w-32 h-32 border-4 border-slate-200 rounded-lg relative flex items-center justify-center bg-slate-50">
+                    <div className="absolute -top-4 w-28 h-6 border-4 border-slate-200 rounded-t-lg bg-slate-50 border-b-0"></div>
+                    
+                    {/* Torrão */}
+                    <div className="w-12 h-10 bg-[#8b5a2b] rounded-full absolute" style={{ animation: 'clodBreak 3s infinite' }}></div>
+                    
+                    {/* Partículas (Solo quebrado) */}
+                    <div className="absolute flex flex-wrap justify-center w-20 gap-1" style={{ animation: 'particlesShow 3s infinite' }}>
+                        {[...Array(8)].map((_, i) => (
+                            <div key={i} className="w-3 h-3 bg-[#6c421b] rounded-sm"></div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Mão (Fora do saco) */}
+                <div className="absolute z-10 text-eco-dark drop-shadow-lg" style={{ animation: 'crushDown 3s infinite' }}>
+                    <i className="ph-fill ph-hand-palm text-6xl"></i>
+                </div>
+            </div>
+        );
+
+        const AnimPreenchimentoTubo = () => (
+            <div className="relative rounded-xl overflow-hidden shadow-sm border border-slate-200 mt-4 bg-white w-full max-w-[280px] mx-auto h-40 flex items-center justify-center">
+                <span className="absolute top-2 left-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Ilustração</span>
+                
+                {/* Tubo Cônico */}
+                <div className="relative w-10 h-28 border-4 border-b-[8px] border-slate-300 rounded-b-xl border-t-0 flex items-end justify-center pb-1">
+                    <div className="absolute -top-2 w-12 h-3 bg-blue-400 rounded-sm"></div>
+                    {/* Nível de Terra subindo */}
+                    <div className="w-full bg-[#6c421b] rounded-b-md transition-all" style={{ animation: 'fillUp 3s infinite' }}></div>
+                </div>
+
+                {/* Pá Dosadora e Terra caindo */}
+                <div className="absolute top-4 right-16 flex flex-col items-center">
+                    <div className="origin-bottom-right" style={{ animation: 'tiltSpade 3s infinite' }}>
+                        <i className="ph-fill ph-shovel text-5xl text-slate-600 transform -rotate-45"></i>
+                    </div>
+                    {/* Terra caindo */}
+                    <div className="absolute top-8 right-6 w-3 h-3 bg-[#8b5a2b] rounded-full" style={{ animation: 'dirtDrop 3s infinite' }}></div>
+                    <div className="absolute top-10 right-4 w-2 h-2 bg-[#6c421b] rounded-full delay-75" style={{ animation: 'dirtDrop 3s infinite' }}></div>
+                    <div className="absolute top-12 right-8 w-2 h-2 bg-[#8b5a2b] rounded-full delay-150" style={{ animation: 'dirtDrop 3s infinite' }}></div>
+                </div>
+            </div>
+        );
+
+        // --- TELAS DO APLICATIVO ---
+
+        // 1. INTRODUÇÃO
+        const IntroScreen = () => (
+            <div className="space-y-6 animate-fade-in">
+                <div className="bg-eco-green text-white p-6 rounded-2xl shadow-lg relative overflow-hidden">
+                    <div className="relative z-10">
+                        <h2 className="text-2xl font-bold mb-2">Coleta na Rizosfera</h2>
+                        <p className="text-sm opacity-90 mb-4">
+                            Guia completo para coleta de solo na linha de plantio e avaliação da microbiota em contato direto com as plantas.
+                        </p>
+                        <div className="bg-white/20 p-3 rounded-lg backdrop-blur-sm border border-white/30 text-sm">
+                            <i className="ph ph-target mr-2"></i>
+                            O mais indicado para avaliar efeito de <strong>bioinsumos</strong> e interações na rizosfera.
+                        </div>
+                    </div>
+                    <i className="ph ph-plant absolute -right-4 -bottom-4 text-8xl opacity-10"></i>
+                </div>
+
+                <Card>
+                    <h3 className="font-bold text-eco-dark text-lg mb-4 border-b pb-2 flex items-center">
+                        <i className="ph ph-map-pin-line mr-2 text-eco-green"></i> Estratégia de Coleta
+                    </h3>
+                    <p className="text-slate-600 text-sm mb-4">
+                        Para compor a amostra, as coletas serão realizadas em uma área de interesse da empresa, sempre coletando em <strong>2 pontos comparativos</strong>:
+                    </p>
+                    <div className="grid grid-cols-2 gap-3 mb-4">
+                        <div className="bg-green-50 border border-green-200 p-3 rounded-lg text-center">
+                            <div className="font-bold text-green-700 text-lg mb-1">1 Ponto</div>
+                            <div className="text-xs text-green-600 font-medium">Área Tratada (Produtos Ecobhio)</div>
+                        </div>
+                        <div className="bg-slate-100 border border-slate-200 p-3 rounded-lg text-center">
+                            <div className="font-bold text-slate-700 text-lg mb-1">1 Ponto</div>
+                            <div className="text-xs text-slate-600 font-medium">Testemunha (Padrão Fazenda)</div>
+                        </div>
+                    </div>
+                </Card>
+
+                <Card>
+                    <h3 className="font-bold text-eco-dark text-lg mb-4 border-b pb-2">Como acontecem as análises</h3>
+                    <div className="flex flex-col space-y-4 relative">
+                        <div className="absolute left-4 top-2 bottom-2 w-0.5 bg-eco-green/30 z-0"></div>
+                        
+                        {[
+                            { step: 1, title: "Kit de Coleta", icon: "ph-package" },
+                            { step: 2, title: "Coleta da Amostra", desc: "Amostragem da comunidade microbiana (Ecobhio x Padrão)", icon: "ph-flask", visual: "map" },
+                            { step: 3, title: "Processamento", desc: "Extração do DNA", icon: "ph-dna" },
+                            { step: 4, title: "Sequenciamento Genético", desc: "Decodificação da diversidade genética (Identificação de genes)", icon: "ph-activity", visual: "dna-seq" },
+                            { step: 5, title: "Laudo e Recomendação", desc: "Interpretação dos resultados e Recomendação ECOBHIO", icon: "ph-file-text", visual: "dashboard" }
+                        ].map((item) => (
+                            <div key={item.step} className="flex items-start relative z-10">
+                                <div className="w-8 h-8 rounded-full bg-eco-green text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-md">
+                                    {item.step}
+                                </div>
+                                <div className="ml-4 bg-slate-50 p-3 rounded-lg border border-slate-100 w-full flex flex-col justify-center">
+                                    <div className="flex items-center">
+                                        <i className={`ph ${item.icon} text-2xl text-eco-dark mr-3 opacity-70`}></i>
+                                        <div>
+                                            <div className="font-bold text-sm text-slate-800">{item.title}</div>
+                                            {item.desc && <div className="text-xs text-slate-500 mt-0.5">{item.desc}</div>}
+                                        </div>
+                                    </div>
+                                    
+                                    {/* Visualização Condicional baseada na nova imagem */}
+                                    {item.visual === 'map' && (
+                                        <div className="mt-3 relative w-full h-32 bg-[#8c949e] rounded-lg overflow-hidden border-2 border-slate-300 shadow-inner">
+                                            <div className="absolute top-0 w-full bg-[#1e293b] text-center text-[10px] text-white py-0.5 font-bold z-10">Talhão 405</div>
+                                            <div className="absolute top-0 bottom-0 left-[60%] w-px bg-white/40 transform rotate-45 origin-top"></div>
+                                            <div className="absolute top-0 bottom-0 left-0 w-px bg-white/40 transform -rotate-45 origin-top translate-x-10"></div>
+                                            {/* Pins */}
+                                            {[
+                                                { id: 1, top: '80%', left: '85%' },
+                                                { id: 2, top: '65%', left: '85%' },
+                                                { id: 3, top: '50%', left: '85%' },
+                                                { id: 4, top: '35%', left: '85%' },
+                                                { id: 5, top: '20%', left: '85%' },
+                                                { id: 6, top: '85%', left: '60%' },
+                                                { id: 7, top: '82%', left: '40%' },
+                                                { id: 8, top: '80%', left: '25%' },
+                                                { id: 9, top: '80%', left: '10%' },
+                                            ].map(pin => (
+                                                <div key={pin.id} className="absolute flex flex-col items-center transform -translate-x-1/2 -translate-y-full" style={{ top: pin.top, left: pin.left }}>
+                                                    <div className="w-3.5 h-3.5 bg-yellow-400 rounded-full flex items-center justify-center text-[7px] font-bold text-slate-900 border border-white shadow-sm">{pin.id}</div>
+                                                    <div className="w-0 h-0 border-l-[3px] border-l-transparent border-t-[4px] border-t-yellow-400 border-r-[3px] border-r-transparent"></div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+
+                                    {item.visual === 'dna-seq' && (
+                                        <div className="mt-3 bg-white p-2 border border-slate-200 rounded flex items-center justify-around overflow-hidden h-12 shadow-inner">
+                                            <i className="ph ph-hard-drives text-2xl text-slate-400"></i>
+                                            <i className="ph ph-arrow-right text-eco-green"></i>
+                                            <div className="flex flex-col items-center">
+                                                <div className="flex space-x-1">
+                                                    <div className="w-2 h-4 bg-blue-300 rounded-sm"></div>
+                                                    <div className="w-2 h-4 bg-green-300 rounded-sm"></div>
+                                                    <div className="w-2 h-4 bg-yellow-300 rounded-sm"></div>
+                                                    <div className="w-2 h-4 bg-red-300 rounded-sm"></div>
+                                                </div>
+                                                <span className="text-[6px] text-slate-400 mt-0.5 font-bold uppercase tracking-wider">Genes</span>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {item.visual === 'dashboard' && (
+                                        <div className="mt-3 flex space-x-2">
+                                            {[1, 2].map(board => (
+                                                <div key={board} className="flex-1 bg-white border border-slate-200 rounded shadow-sm p-2 flex flex-col space-y-1.5">
+                                                    <div className="h-1.5 w-1/3 bg-slate-300 rounded mb-1"></div>
+                                                    <div className="flex items-center space-x-1"><div className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0"></div><div className="h-1 w-full bg-blue-100 rounded overflow-hidden"><div className="h-full bg-blue-500 rounded" style={{width: '60%'}}></div></div></div>
+                                                    <div className="flex items-center space-x-1"><div className="w-1.5 h-1.5 rounded-full bg-green-500 shrink-0"></div><div className="h-1 w-full bg-green-100 rounded overflow-hidden"><div className="h-full bg-green-500 rounded" style={{width: '85%'}}></div></div></div>
+                                                    <div className="flex items-center space-x-1"><div className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0"></div><div className="h-1 w-full bg-red-100 rounded overflow-hidden"><div className="h-full bg-red-500 rounded" style={{width: '40%'}}></div></div></div>
+                                                    <div className="flex items-center space-x-1"><div className="w-1.5 h-1.5 rounded-full bg-purple-500 shrink-0"></div><div className="h-1 w-full bg-purple-100 rounded overflow-hidden"><div className="h-full bg-purple-500 rounded" style={{width: '70%'}}></div></div></div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </Card>
+            </div>
+        );
+
+        // 2. MATERIAIS
+        const MaterialsScreen = () => {
+            const [checkedItems, setCheckedItems] = useState({});
+            const toggleItem = (id) => setCheckedItems(prev => ({...prev, [id]: !prev[id]}));
+
+            return (
+                <div className="space-y-6">
+                    <h2 className="text-xl font-bold text-eco-dark flex items-center">
+                        <i className="ph ph-toolbox mr-2 text-eco-green text-2xl"></i> Kit e Materiais
+                    </h2>
+                    
+                    <Card>
+                        <h3 className="font-bold text-slate-700 mb-4 text-sm uppercase tracking-wide">Fornecidos no Kit Ecobhio</h3>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                            <IconBox icon="ph-bag" label="Sacos" qty="24" obs="'Ponto 1 ao 15' por tratamento" />
+                            <IconBox icon="ph-shovel" label="Pá Dosadora" qty="1" />
+                            <IconBox icon="ph-hand-palm" label="Par de Luvas" qty="1" obs="Descartável" />
+                            <IconBox icon="ph-flask" label="Tubo Cônico" qty="24" obs="50ml" />
+                            <IconBox icon="ph-flag" label="Bandeiras" qty="24" obs="Identificação" />
+                        </div>
+                    </Card>
+
+                    <Card>
+                        <h3 className="font-bold text-slate-700 mb-3 text-sm uppercase tracking-wide">Providenciar (Ferramentas de Corte)</h3>
+                        <p className="text-xs text-slate-500 mb-4">Selecione o que você tem à disposição (checklist interativo):</p>
+                        
+                        <div className="space-y-2">
+                            {[
+                                { id: 't-rosca', label: 'Trado de Rosca', img: 'ph-spiral' },
+                                { id: 't-calador', label: 'Trado Calador', img: 'ph-needle' },
+                                { id: 't-holandes', label: 'Trado Holandês', img: 'ph-anchor' },
+                                { id: 'pa', label: 'Pá Reta / Pá de corte', img: 'ph-shovel' },
+                                { id: 'enxadao', label: 'Enxadão', img: 'ph-pickaxe' },
+                                { id: 'balde', label: 'Balde Limpo', img: 'ph-bucket' }
+                            ].map(tool => (
+                                <label key={tool.id} className={`flex items-center p-3 rounded-lg border cursor-pointer transition-colors ${checkedItems[tool.id] ? 'bg-green-50 border-green-300' : 'bg-white border-slate-200 hover:bg-slate-50'}`}>
+                                    <input type="checkbox" className="checkbox-round mr-4" checked={!!checkedItems[tool.id]} onChange={() => toggleItem(tool.id)} />
+                                    <i className={`ph ${tool.img} text-xl mr-3 ${checkedItems[tool.id] ? 'text-eco-green' : 'text-slate-400'}`}></i>
+                                    <span className={`font-medium ${checkedItems[tool.id] ? 'text-eco-dark' : 'text-slate-600'}`}>{tool.label}</span>
+                                </label>
+                            ))}
+                        </div>
+                    </Card>
+                </div>
+            );
+        };
+
+        // 3. RECOMENDAÇÕES
+        const WarningsScreen = () => (
+            <div className="space-y-4">
+                <h2 className="text-xl font-bold text-eco-dark flex items-center mb-6">
+                    <i className="ph ph-shield-warning mr-2 text-eco-green text-2xl"></i> Recomendações e Cuidados
+                </h2>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg shadow-sm flex items-start">
+                        <i className="ph ph-hand-x text-3xl text-red-500 mr-3 mt-1 shrink-0"></i>
+                        <div>
+                            <h4 className="font-bold text-red-900 text-sm mb-1">Contato Direto</h4>
+                            <p className="text-xs text-red-800">Evitar o contato das mãos diretamente com a amostra. Utilizamos o par de luvas enviado no kit para ajudar.</p>
+                        </div>
+                    </div>
+
+                    <div className="bg-orange-50 border-l-4 border-orange-500 p-4 rounded-r-lg shadow-sm flex items-start">
+                        <i className="ph ph-virus text-3xl text-orange-500 mr-3 mt-1 shrink-0"></i>
+                        <div>
+                            <h4 className="font-bold text-orange-900 text-sm mb-1">Espirros e Saliva</h4>
+                            <p className="text-xs text-orange-800">Cuidar para não espirrar sobre a amostra ou materiais utilizados para coleta.</p>
+                        </div>
+                    </div>
+
+                    <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg shadow-sm flex items-start">
+                        <i className="ph ph-drop text-3xl text-blue-500 mr-3 mt-1 shrink-0"></i>
+                        <div>
+                            <h4 className="font-bold text-blue-900 text-sm mb-1">Higienização</h4>
+                            <p className="text-xs text-blue-800">Higienizar todas as ferramentas utilizadas para o procedimento. Se possível, utilizar <strong>álcool 70%</strong>.</p>
+                        </div>
+                    </div>
+
+                    <div className="bg-eco-light border-l-4 border-eco-green p-4 rounded-r-lg shadow-sm flex items-start">
+                        <i className="ph ph-bug-beast text-3xl text-eco-green mr-3 mt-1 shrink-0"></i>
+                        <div>
+                            <h4 className="font-bold text-eco-dark text-sm mb-1">Contaminação Cruzada</h4>
+                            <p className="text-xs text-slate-700">Cuidar para não contaminar a amostra com outras fontes de microrganismos. Mantenha tudo limpo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+
+        // 4. PASSO A PASSO
+        const StepByStepScreen = () => {
+            const [activeStep, setActiveStep] = useState(1);
+            
+            const steps = [
+                {
+                    id: 1, title: "O Caminhamento",
+                    content: (
+                        <div className="space-y-4">
+                            <p className="text-sm text-slate-600">Na parcela selecionada, escolha os pontos de forma aleatória para realizar a coleta. O método mais comum é o caminhamento em <strong>"zigue-zague"</strong>.</p>
+                            <ul className="list-disc pl-5 text-sm text-slate-700 space-y-2 bg-slate-50 p-4 rounded-lg">
+                                <li><strong>Limpe a área:</strong> retirando pedras e folhas.</li>
+                                <li><strong>Perfure o solo:</strong> Profundidade de 0 a 20 cm.</li>
+                                <li><strong>Amostra:</strong> Colete de 50-100 gramas por amostra simples.</li>
+                                <li className="text-red-600 font-bold">A quantidade de solo em todas as amostras simples deve ser sempre a mesma.</li>
+                            </ul>
+                            
+                            <div className="mt-4 p-4 border-2 border-dashed border-eco-green bg-white rounded-xl relative overflow-hidden flex flex-col items-center">
+                                <span className="text-xs font-bold text-eco-dark mb-2 z-10 bg-white px-2 rounded">Exemplo de caminhamento "zig zag"</span>
+                                <div className="relative w-full h-48 max-w-[200px] flex mx-auto">
+                                    <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-yellow-400 z-0 -translate-x-1/2"></div>
+                                    <div className="absolute left-0 top-0 text-[10px] text-slate-500 font-bold w-1/2 text-right pr-2">TRAT.1<br/>PADRÃO FAZENDA</div>
+                                    <div className="absolute right-0 top-0 text-[10px] text-eco-green font-bold w-1/2 pl-2">TRAT.2<br/>ECOBHIO</div>
+                                    
+                                    {/* SVG Zig Zag Map */}
+                                    <svg className="absolute inset-0 w-full h-full z-10" viewBox="0 0 100 100">
+                                        <path d="M 50 90 L 30 70 L 70 50 L 30 30 L 70 10" fill="none" stroke="#74A629" strokeWidth="1" strokeDasharray="2,2"/>
+                                        <circle cx="50" cy="90" r="4" fill="#74A629"/> <text x="50" y="91" fontSize="4" fill="white" textAnchor="middle" dominantBaseline="middle">1</text>
+                                        <circle cx="30" cy="70" r="4" fill="#74A629"/> <text x="30" y="71" fontSize="4" fill="white" textAnchor="middle" dominantBaseline="middle">2</text>
+                                        <circle cx="70" cy="50" r="4" fill="#74A629"/> <text x="70" y="51" fontSize="4" fill="white" textAnchor="middle" dominantBaseline="middle">3</text>
+                                        <circle cx="30" cy="30" r="4" fill="#74A629"/> <text x="30" y="31" fontSize="4" fill="white" textAnchor="middle" dominantBaseline="middle">4</text>
+                                        <circle cx="70" cy="10" r="4" fill="#74A629"/> <text x="70" y="11" fontSize="4" fill="white" textAnchor="middle" dominantBaseline="middle">5</text>
+                                        
+                                        <text x="40" y="82" fontSize="3" fill="#666">10 MTS</text>
+                                        <text x="50" y="62" fontSize="3" fill="#666">10 MTS</text>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                },
+                {
+                    id: 2, title: "Na Linha de Plantio",
+                    content: (
+                        <div className="space-y-4">
+                            <p className="text-sm text-slate-600">Em cada ponto deve ser coletada uma amostra simples. Esta amostra deve ser coletada na <strong>linha de plantio</strong>, onde a planta possui seu sistema radicular.</p>
+                            
+                            <div className="bg-yellow-50 border border-yellow-200 p-3 rounded-lg flex items-start">
+                                <i className="ph ph-map-pin text-xl text-yellow-600 mr-2 mt-0.5"></i>
+                                <p className="text-xs text-yellow-800">O ponto deve ser marcado com a bandeirinha e <strong>georreferenciado</strong>, para a sinalização do ponto nas próximas coletas.</p>
+                            </div>
+
+                            <div className="bg-white border rounded-lg p-4 mt-4">
+                                <div className="text-center mb-2 text-xs font-bold text-slate-500">Esquema da Rizosfera</div>
+                                <div className="relative h-24 border-b-8 border-[#6c4e31] flex justify-around items-end pb-2">
+                                    <div className="flex flex-col items-center">
+                                        <i className="ph ph-plant text-green-500 text-3xl"></i>
+                                        <div className="w-0 h-0 border-l-[6px] border-l-transparent border-t-[8px] border-t-yellow-400 border-r-[6px] border-r-transparent absolute bottom-[-8px]"></div>
+                                    </div>
+                                    <div className="flex flex-col items-center">
+                                        <i className="ph ph-plant text-green-500 text-3xl"></i>
+                                        <div className="w-0 h-0 border-l-[6px] border-l-transparent border-t-[8px] border-t-yellow-400 border-r-[6px] border-r-transparent absolute bottom-[-8px]"></div>
+                                    </div>
+                                </div>
+                                <div className="flex items-center justify-center mt-3 text-xs bg-[#6c4e31] text-white p-2 rounded">
+                                    <div className="w-0 h-0 border-l-[4px] border-l-transparent border-t-[6px] border-t-yellow-400 border-r-[4px] border-r-transparent mr-2"></div>
+                                    Triângulo amarelo = Local onde coletar amostra (raízes)
+                                </div>
+                            </div>
+                        </div>
+                    )
+                },
+                {
+                    id: 3, title: "Acondicionamento",
+                    content: (
+                        <div className="flex flex-col items-center text-center space-y-4 pt-4">
+                            <div className="w-24 h-24 bg-eco-dark rounded-full flex items-center justify-center text-white text-4xl shadow-lg relative">
+                                <i className="ph ph-bag"></i>
+                                <i className="ph ph-shovel absolute -top-2 -right-2 text-2xl text-yellow-400"></i>
+                            </div>
+                            <h3 className="font-bold text-lg text-eco-dark">Adicionar no Saco</h3>
+                            <p className="text-sm text-slate-600 max-w-xs">O solo coletado (conteúdo) será adicionado dentro do saco plástico correspondente ao ponto de coleta (Ex: Ponto 01).</p>
+                        </div>
+                    )
+                },
+                {
+                    id: 4, title: "Homogeneização",
+                    content: (
+                        <div className="space-y-4 pt-2">
+                            <p className="text-sm text-slate-600">Vede o saco plástico, e <strong>com a mão por fora do plástico</strong> misture o solo.</p>
+                            
+                            <div className="bg-slate-100 p-4 rounded-xl flex items-center">
+                                <div className="bg-white p-3 rounded-full shadow-sm mr-4 shrink-0">
+                                    <i className="ph ph-arrows-out-line-horizontal text-2xl text-eco-dark"></i>
+                                </div>
+                                <p className="text-xs text-slate-700">Se o solo formar agregados ("torrões"), pressione com a mão para reduzir seu tamanho e tornar a amostra a mais homogênea possível.</p>
+                            </div>
+
+                            {/* ANIMAÇÃO SUBSTITUINDO O VÍDEO */}
+                            <AnimHomogeneizacao />
+
+                            <div className="bg-yellow-400 text-yellow-900 p-3 rounded-lg text-center font-bold text-sm shadow-sm animate-pulse mt-4">
+                                <i className="ph ph-arrows-clockwise mr-2"></i>
+                                Repita este processo nos outros pontos de coleta.
+                            </div>
+                        </div>
+                    )
+                },
+                {
+                    id: 5, title: "Preparação do Tubo",
+                    content: (
+                        <div className="space-y-4">
+                            <p className="text-sm text-slate-600">A partir da amostra coletada no saco, você deve preparar a amostra de envio.</p>
+                            
+                            <div className="flex items-center justify-center my-4 space-x-4">
+                                <div className="w-12 h-12 bg-slate-200 rounded-full flex items-center justify-center"><i className="ph ph-flask text-xl text-eco-dark"></i></div>
+                                <i className="ph ph-arrow-right text-eco-green font-bold"></i>
+                                <div className="w-16 h-16 bg-eco-dark rounded-full flex items-center justify-center text-white relative">
+                                    <i className="ph ph-flask text-2xl"></i>
+                                    <i className="ph ph-shovel absolute -right-2 top-0 text-lg text-yellow-400"></i>
+                                </div>
+                            </div>
+                            
+                            <div className="bg-white border border-slate-200 p-4 rounded-lg">
+                                <p className="text-sm text-slate-700">Utilize o tubo cônico de 50ml e a pá dosadora/espátula. Adicione solo ao tubo com o auxílio da espátula <strong>até encher o tubo</strong>.</p>
+                            </div>
+
+                            {/* ANIMAÇÃO SUBSTITUINDO O VÍDEO */}
+                            <AnimPreenchimentoTubo />
+                        </div>
+                    )
+                },
+                {
+                    id: 6, title: "Identificação e Envio",
+                    content: (
+                        <div className="space-y-4">
+                            <div className="bg-yellow-100 border-l-4 border-yellow-500 p-3 mb-4">
+                                <p className="text-sm font-bold text-yellow-800">Tampe e vede bem o tubo!</p>
+                                <p className="text-xs text-yellow-700 mt-1">Verifique a vedação para evitar vazamentos durante o transporte.</p>
+                            </div>
+
+                            <Card className="!bg-slate-50 border-eco-green border-2">
+                                <h4 className="font-bold text-sm text-eco-dark mb-2 flex items-center"><i className="ph ph-barcode mr-2"></i> Codificação Obrigatória</h4>
+                                <p className="text-xs text-slate-600 mb-3">Para cada amostra deve ser criado um código. Exemplo:</p>
+                                <div className="bg-white p-2 rounded text-center border font-mono font-bold text-lg tracking-widest text-eco-green mb-3">
+                                    TL 1.1
+                                </div>
+                                <p className="text-[10px] text-center text-slate-500 mb-3">(Talhão 1, Amostra 1)</p>
+                                
+                                <ul className="text-xs text-slate-600 list-disc pl-4 space-y-1">
+                                    <li>Planilhar: cultura, data, coletor, local.</li>
+                                    <li>Identificar se é Tratamento Ecobhio ou Testemunha.</li>
+                                    <li>Anotar aplicações dos bioinsumos.</li>
+                                </ul>
+                            </Card>
+                            
+                            <div className="bg-red-600 text-white p-3 rounded text-center text-xs font-bold shadow-md">
+                                IMPORTANTE: Colocar uma etiqueta com o código para rastrear e identificar o tubo.
+                            </div>
+                        </div>
+                    )
+                }
+            ];
+
+            return (
+                <div className="flex flex-col h-full">
+                    <h2 className="text-xl font-bold text-eco-dark flex items-center mb-4">
+                        <i className="ph ph-list-numbers mr-2 text-eco-green text-2xl"></i> Passo a Passo
+                    </h2>
+                    
+                    {/* Stepper Header */}
+                    <div className="flex justify-between items-center mb-6 px-2">
+                        {steps.map((s) => (
+                            <div key={s.id} className="flex flex-col items-center relative z-10 w-full" onClick={() => setActiveStep(s.id)}>
+                                <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm cursor-pointer transition-colors border-2 ${activeStep === s.id ? 'bg-eco-green text-white border-eco-green scale-110' : activeStep > s.id ? 'bg-green-100 text-eco-green border-green-200' : 'bg-white text-slate-400 border-slate-200'}`}>
+                                    {activeStep > s.id ? <i className="ph ph-check"></i> : s.id}
+                                </div>
+                                {s.id !== steps.length && (
+                                    <div className={`absolute top-4 left-1/2 w-full h-0.5 -z-10 ${activeStep > s.id ? 'bg-eco-green' : 'bg-slate-200'}`}></div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Content Area */}
+                    <Card className="flex-grow flex flex-col justify-between min-h-[350px]">
+                        <div>
+                            <div className="flex items-center text-eco-green font-bold text-sm mb-1 uppercase tracking-wider">
+                                Passo {activeStep} de 6
+                            </div>
+                            <h3 className="text-2xl font-bold text-eco-dark mb-4 border-b pb-2">{steps[activeStep-1].title}</h3>
+                            <div className="animate-fade-in">
+                                {steps[activeStep-1].content}
+                            </div>
+                        </div>
+                        
+                        {/* Internal Navigation */}
+                        <div className="flex justify-between mt-8 pt-4 border-t">
+                            <button 
+                                onClick={() => setActiveStep(Math.max(1, activeStep - 1))}
+                                disabled={activeStep === 1}
+                                className={`px-4 py-2 rounded-lg text-sm font-bold flex items-center ${activeStep === 1 ? 'text-slate-300 cursor-not-allowed' : 'text-eco-dark bg-slate-100 hover:bg-slate-200'}`}
+                            >
+                                <i className="ph ph-caret-left mr-1"></i> Anterior
+                            </button>
+                            <button 
+                                onClick={() => setActiveStep(Math.min(steps.length, activeStep + 1))}
+                                disabled={activeStep === steps.length}
+                                className={`px-4 py-2 rounded-lg text-sm font-bold flex items-center ${activeStep === steps.length ? 'text-slate-300 cursor-not-allowed' : 'text-white bg-eco-green hover:bg-green-700 shadow-md'}`}
+                            >
+                                Próximo <i className="ph ph-caret-right ml-1"></i>
+                            </button>
+                        </div>
+                    </Card>
+                </div>
+            );
+        };
+
+        // 5. CRONOGRAMA & ENVIO
+        const TimelineScreen = () => (
+            <div className="space-y-6">
+                <h2 className="text-xl font-bold text-eco-dark flex items-center">
+                    <i className="ph ph-calendar-check mr-2 text-eco-green text-2xl"></i> Cronograma e Envio
+                </h2>
+
+                <Card>
+                    <h3 className="font-bold text-slate-700 text-sm mb-4 uppercase">Exemplo de Coleta (Timeline)</h3>
+                    
+                    <div className="bg-slate-50 p-4 rounded-xl border relative mb-4">
+                        <div className="absolute top-0 bottom-0 left-1/2 w-0.5 bg-blue-300 border-r border-dashed border-blue-500 z-0"></div>
+                        <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-white rounded-full p-1 shadow-sm border border-slate-200 z-10 text-blue-500">
+                            <i className="ph ph-satellite text-xl"></i>
+                        </div>
+                        
+                        <div className="grid grid-cols-2 gap-4 relative z-10 mt-10">
+                            <div className="text-center">
+                                <h4 className="text-xs font-bold text-red-600 mb-2">Início do Plantio</h4>
+                                <div className="text-[10px] text-slate-600 mb-2 bg-white p-1 rounded border">
+                                    Retirar amostra:<br/><strong>pós plantio - 1º florada - pré-colheita</strong>
+                                </div>
+                                <div className="flex justify-center space-x-1 mt-2 opacity-80">
+                                    <i className="ph ph-drop text-blue-400"></i>
+                                    <i className="ph ph-plant text-green-400"></i>
+                                </div>
+                                <div className="text-[9px] mt-2 text-slate-500 font-bold">Apenas solo total</div>
+                            </div>
+                            
+                            <div className="text-center">
+                                <h4 className="text-xs font-bold text-red-600 mb-2">Cultura Instalada</h4>
+                                <div className="text-[10px] text-slate-600 mb-2 bg-white p-1 rounded border">
+                                    Retirar amostra:<br/><strong>pós colheita - 1º florada - pré-colheita</strong>
+                                </div>
+                                <div className="flex justify-center space-x-1 mt-2 opacity-80 text-xl">
+                                    <i className="ph ph-tree text-green-700"></i>
+                                    <i className="ph ph-tree text-green-700"></i>
+                                </div>
+                                <div className="text-[9px] mt-2 text-slate-500 font-bold">Solo + Rizosfera</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p className="text-xs text-slate-600 text-justify bg-yellow-50 p-3 rounded border border-yellow-100">
+                        <strong>Nota:</strong> Todos os pontos serão georreferenciados e comparados ponto a ponto. Cada coleta será realizada <strong>sempre na mesma coordenada geográfica</strong> do ponto e na linha do plantio.
+                    </p>
+                </Card>
+
+                <Card className="!bg-blue-50 border-blue-200">
+                    <h3 className="font-bold text-blue-900 text-sm mb-3 flex items-center">
+                        <i className="ph ph-thermometer-snowflake text-blue-600 text-lg mr-2"></i> Armazenamento e Postagem
+                    </h3>
+                    <ul className="text-sm text-blue-800 space-y-3">
+                        <li className="flex items-start">
+                            <i className="ph ph-snowflake text-blue-500 mr-2 mt-0.5"></i>
+                            <span>Acondicionar a embalagem em <strong>freezer</strong> até o momento do envio.</span>
+                        </li>
+                        <li className="flex items-start">
+                            <i className="ph ph-clock text-blue-500 mr-2 mt-0.5"></i>
+                            <span>Postar o mais rápido possível. A amostra não deve demorar mais de <strong>07 dias corridos</strong> para chegar no laboratório.</span>
+                        </li>
+                        <li className="flex items-start">
+                            <i className="ph ph-package text-blue-500 mr-2 mt-0.5"></i>
+                            <span>O envio deve ter as mesmas condições da armazenagem: enviar com <strong>GELOX</strong>.</span>
+                        </li>
+                    </ul>
+                </Card>
+            </div>
+        );
+
+        // --- COMPONENTE PRINCIPAL (APP) ---
+        const App = () => {
+            const [currentTab, setCurrentTab] = useState('intro');
+
+            const tabs = [
+                { id: 'intro', icon: 'ph-info', label: 'Início' },
+                { id: 'mat', icon: 'ph-toolbox', label: 'Materiais' },
+                { id: 'alert', icon: 'ph-shield-warning', label: 'Cuidados' },
+                { id: 'step', icon: 'ph-list-numbers', label: 'Coleta' },
+                { id: 'time', icon: 'ph-calendar-check', label: 'Prazos' }
+            ];
+
+            return (
+                <div className="min-h-screen bg-slate-100 flex flex-col md:max-w-md md:mx-auto md:shadow-2xl md:bg-white relative pb-20">
+                    
+                    {/* Header */}
+                    <header className="bg-white px-5 pt-8 pb-4 shadow-sm sticky top-0 z-50 rounded-b-2xl">
+                        <div className="flex justify-between items-center">
+                            <div>
+                                <h1 className="text-2xl font-black tracking-tight text-eco-green flex items-center">
+                                    <span className="italic">ecobhio</span>
+                                    <i className="ph-fill ph-leaf text-yellow-400 ml-1 text-xl -mt-2"></i>
+                                </h1>
+                                <span className="text-[10px] text-slate-400 uppercase tracking-widest font-bold ml-1">Tecnologia</span>
+                            </div>
+                            <div className="bg-slate-100 p-2 rounded-full cursor-pointer hover:bg-slate-200 transition">
+                                <i className="ph ph-list text-xl text-slate-600"></i>
+                            </div>
+                        </div>
+                    </header>
+
+                    {/* Main Content Area */}
+                    <main className="flex-grow p-5 overflow-y-auto hide-scrollbar">
+                        {currentTab === 'intro' && <IntroScreen />}
+                        {currentTab === 'mat' && <MaterialsScreen />}
+                        {currentTab === 'alert' && <WarningsScreen />}
+                        {currentTab === 'step' && <StepByStepScreen />}
+                        {currentTab === 'time' && <TimelineScreen />}
+                    </main>
+
+                    {/* Bottom Navigation Bar */}
+                    <nav className="bg-white border-t border-slate-200 fixed bottom-0 w-full md:max-w-md pb-safe z-50">
+                        <div className="flex justify-around items-center h-16">
+                            {tabs.map(tab => (
+                                <button 
+                                    key={tab.id}
+                                    onClick={() => setCurrentTab(tab.id)}
+                                    className={`flex flex-col items-center justify-center w-full h-full space-y-1 transition-colors ${currentTab === tab.id ? 'text-eco-green' : 'text-slate-400 hover:text-slate-600'}`}
+                                >
+                                    <i className={`ph ${currentTab === tab.id ? tab.icon + '-fill' : tab.icon} text-2xl`}></i>
+                                    <span className="text-[9px] font-bold uppercase">{tab.label}</span>
+                                </button>
+                            ))}
+                        </div>
+                    </nav>
+
+                    {/* CSS Animation Inject */}
+                    <style dangerouslySetInnerHTML={{__html: `
+                        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+                        .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
+                        .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+                    `}} />
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
