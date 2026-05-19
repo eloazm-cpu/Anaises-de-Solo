@@ -98,10 +98,10 @@
             <div className="space-y-6 animate-fade-in max-w-5xl mx-auto w-full">
                 <div className="bg-eco-green text-white p-6 md:p-10 rounded-2xl shadow-lg relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between z-10">
                     <div className="relative z-20 md:w-2/3">
-                        <h2 className="text-2xl md:text-4xl font-bold mb-3 flex items-center">Coleta na Rizosfera <span className="ml-2 text-3xl md:text-4xl">🍈</span></h2>
-                        <p className="text-sm md:text-base opacity-90 mb-4 md:mb-6 text-justify md:text-left max-w-2xl">Este guia traz as informações necessárias para realizar a coleta de solo na linha de plantio da <strong>cultura do Melão</strong> e avaliar a microbiota que está em contato direto com a planta.</p>
+                        <h2 className="text-2xl md:text-4xl font-bold mb-3 flex items-center">Protocolo de Coleta de Solo <span className="ml-2 text-3xl md:text-4xl">🍈</span></h2>
+                        <p className="text-sm md:text-base opacity-90 mb-4 md:mb-6 text-justify md:text-left max-w-2xl">Este guia apresenta o protocolo para coleta de solo da <strong>cultura do Melão</strong>, comparando a área tratada com Ecobhio e a área conduzida no padrão da fazenda. O objetivo é avaliar alterações na microbiota por <strong>Metagenômica</strong> e <strong>qPCR</strong>.</p>
                         <div className="bg-white/20 p-3 md:p-4 rounded-lg backdrop-blur-sm border border-white/30 text-sm inline-block">
-                            <i className="ph ph-target mr-2"></i>É o mais indicado para avaliar o efeito de <strong>bioinsumos</strong> e interações dos microrganismos na rizosfera.
+                            <i className="ph ph-target mr-2"></i>Comparativo: <strong>Área Tratada Ecobhio</strong> × <strong>Área Padrão Fazenda</strong>
                         </div>
                     </div>
                     <div className="hidden md:block relative z-10 w-1/3 text-right"><i className="ph ph-plant text-9xl opacity-20"></i></div>
@@ -110,9 +110,19 @@
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
                     <div className="space-y-6 flex flex-col h-full">
                         <Card className="flex-grow">
-                            <h3 className="font-bold text-eco-dark text-lg md:text-xl mb-4 border-b pb-2 flex items-center"><i className="ph ph-map-pin-line mr-2 text-eco-green"></i> Estratégia de Coleta</h3>
-                            <p className="text-slate-600 text-sm md:text-base mb-3 text-justify">Para compor a amostra, as coletas deverão ser realizadas em uma área de interesse da empresa. Em cada área avaliada, serão coletadas duas amostras: uma referente ao padrão Fazenda e outra referente ao padrão Ecobhio.</p>
-                            <p className="text-slate-600 text-sm md:text-base mb-4 text-justify">Cada amostra deverá ser composta por subamostras coletadas em <strong>15 pontos georreferenciados</strong>, distribuídos de forma representativa dentro da área de interesse.</p>
+                            <h3 className="font-bold text-eco-dark text-lg md:text-xl mb-4 border-b pb-2 flex items-center"><i className="ph ph-map-pin-line mr-2 text-eco-green"></i> Áreas Avaliadas e Épocas de Coleta</h3>
+                            <p className="text-slate-600 text-sm md:text-base mb-3 text-justify">Serão avaliadas duas áreas: <strong>Área Ecobhio</strong> (com tratamento) e <strong>Área Padrão Fazenda</strong> (sem tratamento). As coletas ocorrem em dois momentos:</p>
+                            <div className="grid grid-cols-2 gap-3 mb-4">
+                                <div className="bg-blue-50 border border-blue-200 p-3 rounded-lg text-center shadow-sm">
+                                    <div className="font-bold text-blue-700 text-base mb-1">T0</div>
+                                    <div className="text-[11px] text-blue-700 font-medium leading-tight">Antes da aplicação<br/>dos tratamentos</div>
+                                </div>
+                                <div className="bg-orange-50 border border-orange-200 p-3 rounded-lg text-center shadow-sm">
+                                    <div className="font-bold text-orange-700 text-base mb-1">T1</div>
+                                    <div className="text-[11px] text-orange-700 font-medium leading-tight">15 a 20 dias após<br/>a aplicação Ecobhio</div>
+                                </div>
+                            </div>
+                            <p className="text-slate-600 text-sm md:text-base mb-4 text-justify">Para cada área e época, será retirada <strong>1 amostra composta</strong> por tipo de análise, formada por <strong>10 a 15 subamostras</strong> distribuídas representativamente.</p>
                             <div className="grid grid-cols-2 gap-3 mb-6">
                                 <div className="bg-green-50 border border-green-200 p-3 md:p-4 rounded-lg text-center flex flex-col justify-center shadow-sm">
                                     <div className="font-bold text-green-700 text-lg md:text-xl mb-1">1 Amostra</div>
@@ -120,7 +130,7 @@
                                 </div>
                                 <div className="bg-slate-100 border border-slate-200 p-3 md:p-4 rounded-lg text-center flex flex-col justify-center shadow-sm">
                                     <div className="font-bold text-slate-700 text-lg md:text-xl mb-1">1 Amostra</div>
-                                    <div className="text-[11px] md:text-xs text-slate-600 font-medium leading-tight">Área Testemunha<br/>(Padrão Fazenda)</div>
+                                    <div className="text-[11px] md:text-xs text-slate-600 font-medium leading-tight">Área Padrão Fazenda<br/>(Sem Tratamento)</div>
                                 </div>
                             </div>
                             <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 shadow-inner">
@@ -137,8 +147,18 @@
                             </div>
                         </Card>
                         <div className="bg-blue-50 border-l-4 border-blue-500 p-4 md:p-6 rounded-lg shadow-sm">
-                            <h4 className="font-bold text-blue-900 text-sm md:text-base mb-2 flex items-center"><i className="ph ph-snowflake text-lg md:text-xl mr-2"></i> Armazenamento e Envio</h4>
-                            <p className="text-xs md:text-sm text-blue-800 text-justify leading-relaxed">Assim que a amostra for coletada e embalada, deve ser acondicionada em <strong>freezer</strong> até o envio. Nossa indicação é que não demore mais de <strong>07 dias corridos</strong> para chegar no laboratório. O envio deve ser feito com <strong>gelox</strong>.</p>
+                            <h4 className="font-bold text-blue-900 text-sm md:text-base mb-2 flex items-center"><i className="ph ph-ruler text-lg md:text-xl mr-2"></i> Profundidades de Coleta</h4>
+                            <div className="space-y-2">
+                                <div className="flex items-center bg-white p-2 rounded border border-blue-100">
+                                    <span className="w-3 h-3 rounded-full bg-blue-500 mr-2 shrink-0"></span>
+                                    <span className="text-xs md:text-sm text-blue-800"><strong>Metagenômica:</strong> 0 a 10 cm de profundidade</span>
+                                </div>
+                                <div className="flex items-center bg-white p-2 rounded border border-blue-100">
+                                    <span className="w-3 h-3 rounded-full bg-blue-700 mr-2 shrink-0"></span>
+                                    <span className="text-xs md:text-sm text-blue-800"><strong>qPCR (alvos específicos):</strong> 0 a 15 cm de profundidade</span>
+                                </div>
+                            </div>
+                            <p className="text-xs text-blue-700 mt-2">Os mesmos pontos georreferenciados devem ser revisitados em T0 e T1.</p>
                         </div>
                     </div>
                     <Card>
@@ -244,19 +264,19 @@
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
                     <div className="bg-red-50 border-l-4 lg:border-l-0 lg:border-t-4 border-red-500 p-5 rounded-r-lg lg:rounded-b-lg lg:rounded-t-none shadow-sm flex lg:flex-col items-start lg:items-center text-left lg:text-center h-full">
                         <i className="ph ph-hand-x text-4xl text-red-500 mr-4 lg:mr-0 lg:mb-3 shrink-0"></i>
-                        <div><h4 className="font-bold text-red-900 text-sm md:text-base mb-2">Contato Direto</h4><p className="text-xs md:text-sm text-red-800">Evitar o contato das mãos diretamente com a amostra. Utilize o par de luvas enviado no kit.</p></div>
+                        <div><h4 className="font-bold text-red-900 text-sm md:text-base mb-2">Pontos Atípicos</h4><p className="text-xs md:text-sm text-red-800">Evitar coleta em carreadores, bordaduras, manchas de encharcamento, falhas de plantio ou acúmulo de matéria orgânica.</p></div>
                     </div>
                     <div className="bg-orange-50 border-l-4 lg:border-l-0 lg:border-t-4 border-orange-500 p-5 rounded-r-lg lg:rounded-b-lg lg:rounded-t-none shadow-sm flex lg:flex-col items-start lg:items-center text-left lg:text-center h-full">
                         <i className="ph ph-virus text-4xl text-orange-500 mr-4 lg:mr-0 lg:mb-3 shrink-0"></i>
-                        <div><h4 className="font-bold text-orange-900 text-sm md:text-base mb-2">Espirros e Saliva</h4><p className="text-xs md:text-sm text-orange-800">Cuidar para não espirrar sobre a amostra ou materiais utilizados para coleta.</p></div>
+                        <div><h4 className="font-bold text-orange-900 text-sm md:text-base mb-2">Contaminação Cruzada</h4><p className="text-xs md:text-sm text-orange-800">Usar ferramentas limpas entre áreas para evitar contaminação cruzada. Higienizar com álcool 70% se possível.</p></div>
                     </div>
                     <div className="bg-blue-50 border-l-4 lg:border-l-0 lg:border-t-4 border-blue-500 p-5 rounded-r-lg lg:rounded-b-lg lg:rounded-t-none shadow-sm flex lg:flex-col items-start lg:items-center text-left lg:text-center h-full">
                         <i className="ph ph-drop text-4xl text-blue-500 mr-4 lg:mr-0 lg:mb-3 shrink-0"></i>
-                        <div><h4 className="font-bold text-blue-900 text-sm md:text-base mb-2">Higienização</h4><p className="text-xs md:text-sm text-blue-800">Higienizar todas as ferramentas utilizadas. Se possível, utilizar <strong>álcool 70%</strong>.</p></div>
+                        <div><h4 className="font-bold text-blue-900 text-sm md:text-base mb-2">Contato Direto</h4><p className="text-xs md:text-sm text-blue-800">Evitar contato das mãos com a amostra. Utilizar luvas durante toda a coleta. Não espirrar sobre os materiais.</p></div>
                     </div>
                     <div className="bg-eco-light border-l-4 lg:border-l-0 lg:border-t-4 border-eco-green p-5 rounded-r-lg lg:rounded-b-lg lg:rounded-t-none shadow-sm flex lg:flex-col items-start lg:items-center text-left lg:text-center h-full">
-                        <i className="ph ph-bug-beetle text-4xl text-eco-green mr-4 lg:mr-0 lg:mb-3 shrink-0"></i>
-                        <div><h4 className="font-bold text-eco-dark text-sm md:text-base mb-2">Contaminação Cruzada</h4><p className="text-xs md:text-sm text-slate-700">Cuidar para não contaminar a amostra com outras fontes de microrganismos.</p></div>
+                        <i className="ph ph-snowflake text-4xl text-eco-green mr-4 lg:mr-0 lg:mb-3 shrink-0"></i>
+                        <div><h4 className="font-bold text-eco-dark text-sm md:text-base mb-2">Conservação</h4><p className="text-xs md:text-sm text-slate-700">Acondicionar em saco ou tubo estéril identificado. Manter refrigerado até o envio ao laboratório.</p></div>
                     </div>
                 </div>
             </div>
@@ -270,9 +290,10 @@
                         <div className="space-y-4">
                             <p className="text-sm md:text-base text-slate-600">Na parcela selecionada, escolha os pontos de forma aleatória. O método mais comum é o caminhamento em <strong>"zigue-zague"</strong>.</p>
                             <ul className="list-disc pl-5 text-sm md:text-base text-slate-700 space-y-3 bg-slate-50 p-4 md:p-6 rounded-lg">
-                                <li><strong>Limpe a área:</strong> retirando pedras e folhas.</li>
-                                <li><strong>Perfure o solo:</strong> Profundidade de 0 a 20 cm.</li>
-                                <li><strong>Amostra:</strong> Colete de 50-100 gramas por amostra simples.</li>
+                                <li><strong>Limpe a área:</strong> retirando excesso de palhada superficial (sem remover solo).</li>
+                                <li><strong>Metagenômica:</strong> coletar na camada de <strong>0 a 10 cm</strong>.</li>
+                                <li><strong>qPCR:</strong> coletar na camada de <strong>0 a 15 cm</strong>.</li>
+                                <li><strong>Quantidade:</strong> colete de 50–100 gramas por amostra simples.</li>
                                 <li className="text-red-600 font-bold">A quantidade de solo em todas as amostras simples deve ser sempre a mesma.</li>
                             </ul>
                         </div>
@@ -385,17 +406,33 @@
                             <div className="bg-red-600 text-white p-4 rounded-lg text-center text-sm md:text-base font-bold shadow-md">IMPORTANTE: Colocar uma etiqueta com o código para rastrear e identificar o tubo.</div>
                         </div>
                         <Card className="!bg-slate-50 border-eco-green border-2 h-full">
-                            <h4 className="font-bold text-base md:text-lg text-eco-dark mb-3 flex items-center"><i className="ph ph-barcode mr-2 text-2xl"></i> Codificação Obrigatória</h4>
-                            <p className="text-sm text-slate-600 mb-4">Para cada amostra deve ser criado um código único. Exemplo:</p>
-                            <div className="bg-white p-4 rounded text-center border font-mono font-bold text-2xl md:text-3xl tracking-widest text-eco-green mb-3 shadow-inner">TL 1.1</div>
-                            <p className="text-xs text-center text-slate-500 mb-5 font-medium uppercase tracking-wider">(Talhão 1, Amostra 1)</p>
-                            <div className="bg-white p-4 rounded border text-sm text-slate-700 space-y-2">
-                                <p className="font-bold mb-2">Preencher na Planilha:</p>
-                                <ul className="list-disc pl-5 space-y-1">
-                                    <li>Cultura, data, coletor e local.</li>
-                                    <li>Tratamento (Ecobhio ou Testemunha).</li>
-                                    <li>Anotar aplicações dos bioinsumos.</li>
-                                </ul>
+                            <h4 className="font-bold text-base md:text-lg text-eco-dark mb-3 flex items-center"><i className="ph ph-barcode mr-2 text-2xl"></i> Codificação das Amostras</h4>
+                            <p className="text-sm text-slate-600 mb-3">Cada amostra deve receber um código único conforme o padrão:</p>
+                            <div className="space-y-3 mb-4">
+                                <div>
+                                    <p className="text-xs font-bold text-slate-500 uppercase mb-1">Metagenômica (0–10 cm)</p>
+                                    <div className="bg-white p-2 rounded border font-mono text-xs text-eco-green space-y-1">
+                                        <div>MEL_ECO_T0_0-10cm</div>
+                                        <div>MEL_ECO_T1_0-10cm</div>
+                                        <div>MEL_PAD_T0_0-10cm</div>
+                                        <div>MEL_PAD_T1_0-10cm</div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p className="text-xs font-bold text-slate-500 uppercase mb-1">qPCR (0–15 cm)</p>
+                                    <div className="bg-white p-2 rounded border font-mono text-xs text-eco-dark space-y-1">
+                                        <div>MEL_ECO_T0_0-15cm</div>
+                                        <div>MEL_ECO_T1_0-15cm</div>
+                                        <div>MEL_PAD_T0_0-15cm</div>
+                                        <div>MEL_PAD_T1_0-15cm</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="bg-white p-3 rounded border text-xs text-slate-600 space-y-1">
+                                <p className="font-bold">Legenda:</p>
+                                <p>MEL = melão | ECO = área Ecobhio</p>
+                                <p>PAD = padrão fazenda | T0 = antes do tratamento</p>
+                                <p>T1 = 15 a 20 dias após aplicação</p>
                             </div>
                         </Card>
                     </div>
@@ -439,28 +476,28 @@
                 <h2 className="text-xl md:text-2xl font-bold text-eco-dark flex items-center"><i className="ph ph-calendar-check mr-2 text-eco-green text-3xl"></i> Cronograma e Avaliações</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
                     <Card>
-                        <h3 className="font-bold text-slate-700 text-sm md:text-base mb-6 uppercase tracking-wide border-b pb-2">Exemplo de Coleta (Timeline)</h3>
+                        <h3 className="font-bold text-slate-700 text-sm md:text-base mb-6 uppercase tracking-wide border-b pb-2">Cronograma de Coletas (Timeline)</h3>
                         <div className="bg-slate-50 p-4 md:p-6 rounded-xl border relative mb-4">
                             <div className="absolute top-0 bottom-0 left-1/2 w-1 bg-blue-200 border-r-2 border-dashed border-blue-400 z-0"></div>
                             <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-white rounded-full p-2 shadow-md border border-blue-200 z-10 text-blue-500"><i className="ph ph-satellite text-2xl"></i></div>
                             <div className="grid grid-cols-2 gap-6 relative z-10 mt-16">
                                 <div className="text-center bg-white p-3 md:p-4 rounded-lg shadow-sm border border-slate-100">
-                                    <h4 className="text-sm md:text-base font-bold text-red-600 mb-2">Início do Plantio</h4>
-                                    <div className="text-[10px] md:text-xs text-slate-600 mb-3 bg-slate-50 p-2 rounded border border-slate-200 h-12 md:h-16 flex items-center justify-center">Retirar amostra:<br/><strong>pós plantio - 1º florada</strong></div>
+                                    <h4 className="text-sm md:text-base font-bold text-blue-600 mb-2">T0 — Coleta Basal</h4>
+                                    <div className="text-[10px] md:text-xs text-slate-600 mb-3 bg-slate-50 p-2 rounded border border-slate-200 h-12 md:h-16 flex items-center justify-center"><strong>Antes da aplicação</strong><br/>dos tratamentos</div>
                                     <div className="flex justify-center space-x-2 mt-3 opacity-80"><i className="ph-fill ph-drop text-blue-400 text-xl md:text-2xl"></i><i className="ph-fill ph-plant text-green-400 text-xl md:text-2xl"></i></div>
-                                    <div className="text-[9px] md:text-[10px] mt-3 text-slate-500 font-bold uppercase tracking-wider bg-slate-100 px-2 py-1 rounded inline-block">Apenas solo total</div>
+                                    <div className="text-[9px] md:text-[10px] mt-3 text-slate-500 font-bold uppercase tracking-wider bg-slate-100 px-2 py-1 rounded inline-block">Caracterização inicial</div>
                                 </div>
                                 <div className="text-center bg-white p-3 md:p-4 rounded-lg shadow-sm border border-slate-100">
-                                    <h4 className="text-sm md:text-base font-bold text-red-600 mb-2">Cultura Instalada</h4>
-                                    <div className="text-[10px] md:text-xs text-slate-600 mb-3 bg-slate-50 p-2 rounded border border-slate-200 h-12 md:h-16 flex items-center justify-center">Retirar amostra:<br/><strong>pré-colheita</strong></div>
+                                    <h4 className="text-sm md:text-base font-bold text-orange-600 mb-2">T1 — Após Tratamento</h4>
+                                    <div className="text-[10px] md:text-xs text-slate-600 mb-3 bg-slate-50 p-2 rounded border border-slate-200 h-12 md:h-16 flex items-center justify-center"><strong>15 a 20 dias</strong><br/>após aplicação Ecobhio</div>
                                     <div className="flex justify-center space-x-1 mt-3 opacity-80 text-xl md:text-2xl"><span>🍈</span><span>🍈</span></div>
-                                    <div className="text-[9px] md:text-[10px] mt-3 text-slate-500 font-bold uppercase tracking-wider bg-eco-light text-eco-green px-2 py-1 rounded inline-block border border-eco-green/20">Solo + Rizosfera</div>
+                                    <div className="text-[9px] md:text-[10px] mt-3 text-slate-500 font-bold uppercase tracking-wider bg-eco-light text-eco-green px-2 py-1 rounded inline-block border border-eco-green/20">Alterações iniciais</div>
                                 </div>
                             </div>
                         </div>
                         <p className="text-xs md:text-sm text-slate-600 text-justify bg-yellow-50 p-4 rounded-lg border border-yellow-200 shadow-sm flex items-start">
                             <i className="ph-fill ph-info text-yellow-500 text-xl mr-3 mt-0.5 shrink-0"></i>
-                            <span><strong>Nota:</strong> Todos os pontos serão georreferenciados e comparados ponto a ponto. Cada coleta será realizada <strong>sempre na mesma coordenada geográfica</strong>.</span>
+                            <span><strong>Nota:</strong> Os pontos georreferenciados em T0 devem ser revisitados exatamente em T1 para garantir a <strong>comparação temporal</strong> das amostras.</span>
                         </p>
                     </Card>
                     <Card className="!bg-eco-light border-eco-green/40 border-2">
@@ -473,8 +510,8 @@
                         </div>
                         <div className="bg-white p-4 rounded-lg border border-slate-200 shadow-sm relative overflow-hidden">
                             <div className="absolute top-0 left-0 w-1 h-full bg-eco-green"></div>
-                            <h4 className="font-bold text-sm text-eco-dark mb-2 flex items-center"><i className="ph-fill ph-list-magnifying-glass text-eco-green mr-2 text-xl"></i> Resultados Esperados</h4>
-                            <p className="text-xs md:text-sm text-slate-600 mb-3 text-justify leading-relaxed">Acompanhamento da <strong>microbiota existente e suas interações</strong>. Comparação média de produção área tratada vs não tratada.</p>
+                            <h4 className="font-bold text-sm text-eco-dark mb-2 flex items-center"><i className="ph-fill ph-list-magnifying-glass text-eco-green mr-2 text-xl"></i> Observação Técnica</h4>
+                            <p className="text-xs md:text-sm text-slate-600 mb-3 text-justify leading-relaxed">Registrar junto com as amostras: <strong>data da aplicação</strong>, dose do produto, estádio da cultura, umidade do solo, histórico de irrigação, adubações, defensivos aplicados e condições climáticas.</p>
                             <div className="bg-slate-50 border border-slate-200 p-3 rounded flex items-center">
                                 <i className="ph-fill ph-file-pdf text-red-500 text-3xl mr-3 shrink-0"></i>
                                 <div><strong className="text-eco-dark text-xs md:text-sm block">Relatório Final Agronômico</strong><span className="text-[10px] md:text-xs text-slate-500">Entregue ao final do ciclo da cultura.</span></div>
