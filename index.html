@@ -101,7 +101,7 @@
                         <h2 className="text-2xl md:text-4xl font-bold mb-3 flex items-center">Protocolo de Coleta de Solo <span className="ml-2 text-3xl md:text-4xl">🍈</span></h2>
                         <p className="text-sm md:text-base opacity-90 mb-4 md:mb-6 text-justify md:text-left max-w-2xl">Este guia apresenta o protocolo para coleta de solo da <strong>cultura do Melão</strong>, comparando a área tratada com Ecobhio e a área conduzida no padrão da fazenda. O objetivo é avaliar alterações na microbiota por <strong>Metagenômica</strong> e <strong>qPCR</strong>.</p>
                         <div className="bg-white/20 p-3 md:p-4 rounded-lg backdrop-blur-sm border border-white/30 text-sm inline-block">
-                            <i className="ph ph-target mr-2"></i>Comparativo: <strong>Área Tratada Ecobhio</strong> × <strong>Área Padrão Fazenda</strong>
+                            <i className="ph ph-target mr-2"></i>Comparativo: <strong>Área com Tratamento Ecobhio</strong> × <strong>Manejo Convencional da Fazenda</strong>
                         </div>
                     </div>
                     <div className="hidden md:block relative z-10 w-1/3 text-right"><i className="ph ph-plant text-9xl opacity-20"></i></div>
@@ -126,11 +126,11 @@
                             <div className="grid grid-cols-2 gap-3 mb-6">
                                 <div className="bg-green-50 border border-green-200 p-3 md:p-4 rounded-lg text-center flex flex-col justify-center shadow-sm">
                                     <div className="font-bold text-green-700 text-lg md:text-xl mb-1">1 Amostra</div>
-                                    <div className="text-[11px] md:text-xs text-green-700 font-medium leading-tight">Área Tratada<br/>(Produtos Ecobhio)</div>
+                                    <div className="text-[11px] md:text-xs text-green-700 font-medium leading-tight">Área com Tratamento<br/>Ecobhio</div>
                                 </div>
                                 <div className="bg-slate-100 border border-slate-200 p-3 md:p-4 rounded-lg text-center flex flex-col justify-center shadow-sm">
                                     <div className="font-bold text-slate-700 text-lg md:text-xl mb-1">1 Amostra</div>
-                                    <div className="text-[11px] md:text-xs text-slate-600 font-medium leading-tight">Área Padrão Fazenda<br/>(Sem Tratamento)</div>
+                                    <div className="text-[11px] md:text-xs text-slate-600 font-medium leading-tight">Manejo Convencional<br/>da Fazenda</div>
                                 </div>
                             </div>
                             <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 shadow-inner">
@@ -179,7 +179,7 @@
                             <div className="absolute left-4 top-2 bottom-2 w-0.5 bg-eco-green/30 z-0"></div>
                             {[
                                 { step:1, title:"Kit de Coleta", icon:"ph-package" },
-                                { step:2, title:"Coleta da Amostra", desc:"Amostragem da comunidade microbiana (Ecobhio x Padrão)", icon:"ph-flask", visual:"map" },
+                                { step:2, title:"Coleta da Amostra", desc:"Amostragem da comunidade microbiana (Ecobhio x Manejo Convencional)", icon:"ph-flask", visual:"map" },
                                 { step:3, title:"Processamento", desc:"Extração do DNA", icon:"ph-dna" },
                                 { step:4, title:"Sequenciamento Genético", desc:"Decodificação da diversidade genética", icon:"ph-activity", visual:"dna-seq" },
                                 { step:5, title:"Laudo e Recomendação", desc:"Interpretação dos resultados e Recomendação ECOBHIO", icon:"ph-file-text", visual:"dashboard" }
@@ -371,13 +371,13 @@
                             <i className="ph ph-shovel absolute -top-2 -right-4 text-4xl text-yellow-400"></i>
                         </div>
                         <h3 className="font-bold text-xl md:text-2xl text-eco-dark">Adicionar no Saco</h3>
-                        <p className="text-sm md:text-base text-slate-600 max-w-md">O solo coletado será adicionado dentro do saco plástico correspondente ao ponto de coleta (Ex: Ponto 01).</p>
+                        <p className="text-sm md:text-base text-slate-600 max-w-md">O solo coletado de todos os pontos (subamostras) será adicionado dentro do saco plástico correspondente ao ponto de coleta (Ex: Área com Tratamento Ecobhio).</p>
                     </div>
                 )},
                 { id:4, title:"Homogeneização", content:(
                     <div className="space-y-6 md:grid md:grid-cols-2 md:gap-8 md:space-y-0 items-center">
                         <div className="space-y-6">
-                            <p className="text-sm md:text-base text-slate-600">Vede o saco plástico, e <strong>com a mão por fora do plástico</strong> misture o solo.</p>
+                            <p className="text-sm md:text-base text-slate-600">Vede o saco plástico, e <strong>com a mão por fora do saco plástico</strong> misture o solo de todas as amostras.</p>
                             <div className="bg-slate-100 p-5 rounded-xl flex items-center shadow-sm">
                                 <div className="bg-white p-4 rounded-full shadow-md mr-5 shrink-0"><i className="ph ph-arrows-out-line-horizontal text-3xl text-eco-dark"></i></div>
                                 <p className="text-sm text-slate-700">Se o solo formar torrões, pressione com a mão para tornar a amostra mais homogênea.</p>
@@ -537,6 +537,7 @@
         const MethodologyScreen = () => (
             <div className="space-y-6 animate-fade-in max-w-5xl mx-auto w-full">
                 <h2 className="text-xl md:text-2xl font-bold text-eco-dark flex items-center mb-6"><i className="ph ph-microscope mr-2 text-eco-green text-3xl"></i> Metodologia GOLSOLOS</h2>
+
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
                     <Card className="border-t-4 border-t-eco-green">
                         <h3 className="font-bold text-slate-800 text-sm md:text-base mb-6 uppercase flex items-center border-b pb-2">qPCR <span className="text-xs text-slate-500 ml-2 normal-case font-medium">(Como funciona?)</span></h3>
@@ -567,10 +568,10 @@
                     </Card>
                     <Card className="border-t-4 border-t-[#004d40]">
                         <div className="flex items-center justify-between mb-4 border-b pb-4">
-                            <div><h3 className="font-bold text-slate-800 text-sm md:text-lg leading-tight">Lista de Microrganismos</h3><span className="text-xs text-slate-500 font-medium uppercase tracking-widest">Painel Golsolos</span></div>
+                            <div><h3 className="font-bold text-slate-800 text-sm md:text-lg leading-tight">Lista de Microrganismos</h3><span className="text-xs text-slate-500 font-medium uppercase tracking-widest">Painel de Alvos de qPCR da Go Solos</span></div>
                             <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-[#004d40] flex items-center justify-center text-white font-bold border-[3px] border-[#d35400] shrink-0 shadow-lg"><span className="text-white text-lg md:text-2xl">G</span><span className="text-[#d35400] text-lg md:text-2xl italic">S</span></div>
                         </div>
-                        <p className="text-xs md:text-sm text-slate-600 mb-4 text-justify">Alguns dos principais microrganismos que a análise consegue identificar:</p>
+                        <p className="text-xs md:text-sm text-slate-600 mb-4 text-justify">Alguns dos principais microrganismos que a análise de qPCR consegue identificar:</p>
                         <div className="bg-slate-50 border border-slate-200 rounded-lg p-4 h-64 md:h-[420px] overflow-y-auto custom-scrollbar text-xs md:text-sm text-slate-700 columns-1 sm:columns-2 gap-6 font-mono shadow-inner">
                             <ul className="list-disc pl-4 space-y-2">
                                 <li>Allexivirus</li><li>American Hop Latent Virus</li><li>Apple mosaic virus</li><li>Azospirillum brasilense</li>
@@ -585,6 +586,66 @@
                         </div>
                         <div className="text-center mt-3"><span className="text-[10px] md:text-xs text-slate-400 uppercase tracking-widest flex justify-center items-center"><i className="ph ph-arrows-out-line-vertical mr-2 text-lg"></i> Deslize para ver a lista completa</span></div>
                     </Card>
+                </div>
+
+                <div className="border-t-2 border-dashed border-slate-200 pt-6">
+                    <h2 className="text-lg md:text-xl font-bold text-eco-dark flex items-center mb-5"><i className="ph ph-dna mr-2 text-eco-green text-2xl"></i> Metagenômica</h2>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+                        <Card className="border-t-4 border-t-[#2e7d32]">
+                            <h3 className="font-bold text-slate-800 text-sm md:text-base mb-6 uppercase flex items-center border-b pb-2">Metagenômica <span className="text-xs text-slate-500 ml-2 normal-case font-medium">(Como funciona?)</span></h3>
+                            <div className="relative border-l-2 border-slate-200 ml-4 space-y-8 pb-4 mt-4">
+                                {[
+                                    {step:1,title:"Coleta da amostra de solo",icon:"ph-plant",color:"green",desc:""},
+                                    {step:2,title:"Extração do DNA total",icon:"ph-dna",color:"blue",desc:""},
+                                    {step:3,title:"Sequenciamento genético",icon:"ph-activity",color:"purple",desc:"16S V3/V4 para bactérias + ITS1/ITS4 para fungos"},
+                                ].map((item) => (
+                                    <div key={item.step} className="relative">
+                                        <div className={`absolute -left-[17px] top-1 w-8 h-8 md:w-10 md:h-10 bg-${item.color}-100 rounded-full border-2 border-white flex items-center justify-center text-${item.color}-600 shadow-sm`}>
+                                            <i className={`ph-fill ${item.icon} text-lg md:text-xl`}></i>
+                                        </div>
+                                        <div className="ml-12 md:ml-16 bg-slate-50 border border-slate-100 p-4 rounded-lg shadow-sm">
+                                            <span className="text-[10px] md:text-xs font-bold text-slate-400 block mb-1 uppercase tracking-widest">Passo {item.step}</span>
+                                            <h4 className="text-sm md:text-base font-bold text-slate-700">{item.title}</h4>
+                                            {item.desc && <p className="text-xs text-slate-500 mt-1">{item.desc}</p>}
+                                        </div>
+                                    </div>
+                                ))}
+                                <div className="relative">
+                                    <div className="absolute -left-[17px] top-1 w-8 h-8 md:w-10 md:h-10 bg-orange-100 rounded-full border-2 border-white flex items-center justify-center text-orange-600 shadow-md ring-2 ring-orange-200"><i className="ph-fill ph-chart-bar text-lg md:text-xl"></i></div>
+                                    <div className="ml-12 md:ml-16 bg-orange-50 border border-orange-200 p-4 md:p-5 rounded-lg shadow-md">
+                                        <span className="text-[10px] md:text-xs font-bold text-orange-500 block mb-1 uppercase tracking-widest">Passo 4 (Final)</span>
+                                        <h4 className="text-sm md:text-lg font-bold text-slate-800">Bioinformática e Interpretação</h4>
+                                        <div className="mt-4 flex flex-col sm:flex-row gap-3">
+                                            <div className="bg-white p-3 rounded border border-orange-100 flex items-start shadow-sm flex-1"><i className="ph-fill ph-circles-three text-orange-500 mr-2 text-xl shrink-0"></i><span className="text-xs md:text-sm text-slate-700 font-medium leading-tight">Diversidade, taxonomia e potencial funcional</span></div>
+                                            <div className="bg-white p-3 rounded border border-orange-100 flex items-start shadow-sm flex-1"><i className="ph-fill ph-clock text-orange-500 mr-2 text-xl shrink-0"></i><span className="text-xs md:text-sm text-slate-700 font-medium leading-tight">Resultado em <strong>20 a 25 dias úteis</strong></span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </Card>
+                        <Card className="border-t-4 border-t-[#2e7d32]">
+                            <div className="flex items-center justify-between mb-4 border-b pb-4">
+                                <div>
+                                    <h3 className="font-bold text-slate-800 text-sm md:text-lg leading-tight">Indicadores da Metagenômica</h3>
+                                    <span className="text-xs text-slate-500 font-medium uppercase tracking-widest">Painel de Avaliação da Go Solos</span>
+                                </div>
+                                <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-[#004d40] flex items-center justify-center text-white font-bold border-[3px] border-[#d35400] shrink-0 shadow-lg"><span className="text-white text-lg md:text-2xl">G</span><span className="text-[#d35400] text-lg md:text-2xl italic">S</span></div>
+                            </div>
+                            <p className="text-xs md:text-sm text-slate-600 mb-5 text-justify leading-relaxed">A metagenômica avalia a diversidade, a taxonomia e o potencial funcional da comunidade microbiana do solo, apoiando decisões de manejo mais assertivas.</p>
+                            <div className="grid grid-cols-2 gap-x-6 gap-y-3 mb-4">
+                                {["Diversidade microbiana","Risco de doenças de solo","Taxonomia bacteriana","Índices de saúde do solo","Taxonomia fúngica","Sustentabilidade biológica","Potencial funcional","Relação com o manejo","Microrganismos benéficos","Comparação entre áreas","Microrganismos patogênicos","Apoio à recomendação técnica"].map((item, i) => (
+                                    <div key={i} className="flex items-center gap-2">
+                                        <span className="w-2 h-2 rounded-full bg-[#2e7d32] shrink-0"></span>
+                                        <span className="text-xs md:text-sm text-slate-700">{item}</span>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="border-t pt-3 flex items-center justify-center gap-2">
+                                <i className="ph ph-arrows-out-line-vertical text-slate-400 text-lg"></i>
+                                <span className="text-[10px] md:text-xs text-slate-400 uppercase tracking-widest">Dados genéticos para interpretação do solo</span>
+                            </div>
+                        </Card>
+                    </div>
                 </div>
             </div>
         );
